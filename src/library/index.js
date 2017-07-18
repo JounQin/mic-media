@@ -1,5 +1,3 @@
-import './library.scss'
-
 import {_, Marionette, $} from './lib'
 
 import AppView from './App'
