@@ -5,22 +5,24 @@ import plumber from 'gulp-plumber'
 import autoprefixer from 'autoprefixer'
 import {rollup} from 'rollup'
 import buble from 'rollup-plugin-buble'
+import {argv} from 'yargs'
 
 const LIBRARY = 'library'
 const MODAL = 'modal'
 
-const ALL = [LIBRARY, MODAL]
+const ENTRIES = [LIBRARY, MODAL]
 
-const generate = ext => ALL.map(item => `src/${item}/*.${ext}`)
+const generate = ext => ENTRIES.map(item => `src/${item}/*.${ext}`)
 
 const scripts = generate('js')
 const styles = generate('scss')
 
-export const script = () => Promise.all(ALL.map(entry => rollup({
+export const script = () => Promise.all(ENTRIES.map(entry => rollup({
   entry: `src/${entry}/index.js`,
   external: ['jquery', 'underscore', 'backbone', 'backbone.marionette'],
   plugins: [buble()]
 }).then(bundle => bundle.write({
+  banner: argv.watch && `document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></script>');`,
   dest: `docs/${entry}.js`,
   format: 'iife',
   globals: {
@@ -41,6 +43,7 @@ export const watchScript = () => gulp.watch(scripts, script)
 export const watchStyle = () => gulp.watch(styles, style)
 
 export const watch = () => {
+  script()
   watchScript()
   watchStyle()
 }
