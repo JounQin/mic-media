@@ -1,0 +1,10 @@
+{
+  "ignore": [
+    ".git",
+    "dist",
+    "docs",
+    "node_modules",
+    "src/**/*.js"
+  ],
+  "ext": "js json scss"
+}
