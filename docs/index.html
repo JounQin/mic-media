@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>MIC Material Library</title>
+  <meta charset="UTF-8">
+  <title>MIC Material Library</title>
+  <link rel="stylesheet" href="//unpkg.com/art-dialog/css/dialog.css">
+  <link rel="stylesheet" href="./modal.css">
 </head>
 <body>
 <a href="./library.html">library</a>
-<a href="./modal.html">modal</a>
+<button id="show-modal">Show Modal</button>
+<script src="//unpkg.com/jquery/dist/jquery.js"></script>
+<script src="//unpkg.com/art-dialog/dist/dialog.js"></script>
+<script src="./modal.js"></script>
+<script>
+  $('#show-modal').on('click', () => {
+    materialLibrary({
+      title: '选择素材'
+    })
+  })
+</script>
 </body>
 </html>

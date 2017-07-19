@@ -19,13 +19,14 @@ const styles = generate('scss')
 
 export const script = () => Promise.all(ENTRIES.map(entry => rollup({
   entry: `src/${entry}/index.js`,
-  external: ['jquery', 'underscore', 'backbone', 'backbone.marionette'],
+  external: ['art-dialog', 'jquery', 'underscore', 'backbone', 'backbone.marionette'],
   plugins: [buble()]
 }).then(bundle => bundle.write({
   banner: argv.watch && `document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></script>');`,
   dest: `docs/${entry}.js`,
   format: 'iife',
   globals: {
+    'art-dialog': 'dialog',
     jquery: 'jQuery',
     underscore: '_',
     backbone: 'Backbone',

@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Material Modal</title>
+  <meta charset="UTF-8">
+  <title>Material Modal</title>
+  <link rel="stylesheet" href="../node_modules/art-dialog/css/dialog.css">
+  <link rel="stylesheet" href="../docs/modal.css">
 </head>
 <body>
-
+<button id="show-modal">Show Modal</button>
+<script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/art-dialog/dist/dialog.js"></script>
+<script src="../docs/modal.js"></script>
+<script>
+  $('#show-modal').on('click', () => {
+    materialLibrary({
+      title: '选择素材'
+    })
+  })
+</script>
 </body>
 </html>
