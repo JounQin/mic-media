@@ -1,4 +1,27 @@
+.material-library-content .clearfix {
+  *zoom: 1;
+  /*IE/7/6*/ }
+  .material-library-content .clearfix:after {
+    clear: both; }
+  .material-library-content .clearfix:before, .material-library-content .clearfix:after {
+    content: " ";
+    display: table; }
+
 .material-library-content .materials {
-  padding: 0; }
+  margin: 0;
+  padding: 0;
+  padding-bottom: 20px; }
   .material-library-content .materials > li {
-    list-style: none; }
+    list-style: none;
+    float: left;
+    margin: 3px;
+    border: 1px solid lightgray; }
+
+.material-library-content .img-wrapper {
+  height: 100px;
+  width: 100px;
+  text-align: center; }
+  .material-library-content .img-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle; }

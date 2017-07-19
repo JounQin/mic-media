@@ -1,33 +1,58 @@
 import $ from 'jquery'
 import _dialog from 'art-dialog'
 
-const CONTENT_ID = '__material_library_dialog__'
-let $content
+import {map, on} from './utils'
 
-const compile = ({loading, materials} = {}) => {
+const CONTENT_ID = '__material_library_dialog__'
+
+const compile = ({loading, materials, currIndex} = {}) => {
   if (loading) return `Loading...`
-  return `<ul class="materials">
-${materials.map(material => `<li><img src="${material.imgSrc}"></li>`).join('')}
-</ul>`
+  return `<ul class="materials clearfix">
+${map(materials, (material, index) => `<li>
+    <div class="img-wrapper" data-index="${index}"><img src="${material.imgSrc}"></div>
+  </li>`).join('')}
+</ul>${currIndex + 1 || ''}`
 }
 
-const render = (data = {}) => {
-  if (!$content || !$content.length) return
-  return $content.html(compile(data) || '')
+class Model {
+  constructor($el, attributes) {
+    this.$el = $el
+    this.attributes = attributes
+    this.render()
+  }
+
+  set(newAttributes) {
+    $.extend(this.attributes, newAttributes)
+    this.render()
+  }
+
+  render() {
+    const {$el} = this
+    if (!$el || !$el.length) return
+    $el.html(compile(this.attributes) || '')
+  }
 }
 
 const createDialog = options => {
-  $content = $(`#${CONTENT_ID}`)
+  let $content = $(`#${CONTENT_ID}`)
   $content.length && $content.remove()
-  $content = $(`<div id="${CONTENT_ID}" class="material-library-content"></div>`).appendTo('body')
+  $content = $(`<div id="${CONTENT_ID}" class="material-library-content"></div>`)
+    .appendTo('body')
 
-  render({
-    loading: true
+  const model = new Model($content, {loading: true})
+
+  on($content, {
+    'click .img-wrapper'(e) {
+      model.set({
+        currIndex: $(e.currentTarget).data('index')
+      })
+    }
   })
 
   setTimeout(() => {
-    render({
-      materials: [{
+    model.set({
+      loading: false,
+      materials: map([{
         imgSrc: 'image?tid=0&id=mEwTWQKMhgub',
         imgName: 'mEwTWQKMhgub'
       }, {
@@ -36,7 +61,7 @@ const createDialog = options => {
       }, {
         imgSrc: 'image?tid=0&id=JawQizZcbgpq',
         imgName: 'JawQizZcbgpq'
-      }].map(img => {
+      }], img => {
         img.imgSrc = 'http://photo.made-in-china.com/' + img.imgSrc
         return img
       })
