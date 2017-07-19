@@ -1,7 +1,54 @@
+@mixin clearfix {
+  *zoom: 1; /*IE/7/6*/
+
+  &:after {
+    clear: both;
+  }
+
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+.list-unstyled {
+  padding: 0;
+
+  > li {
+    list-style: none;
+  }
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+$border-color: #aac9f2;
+$bg-color: #eaf4fe;
+$divide-color: #d9d9d9;
+$img-border-color: #f2f2f2;
+
+body {
+  margin: 0;
+  font: 12px/15px arial, simsun, tahoma, sans-serif;
+}
+
 #app {
   max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid $border-color;
+  border-radius: 3px;
 }
 
 @import "header";
+@import "neck";
+@import "body";

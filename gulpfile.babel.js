@@ -31,7 +31,7 @@ export const script = () => Promise.all(ENTRIES.map(entry => rollup({
     backbone: 'Backbone',
     'backbone.marionette': 'Marionette'
   }
-}))))
+})))).catch(console.error)
 
 export const style = () => gulp.src(styles)
   .pipe(plumber())

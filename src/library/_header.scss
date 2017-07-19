@@ -1,8 +1,20 @@
 .header {
-  background-color: pink;
+  padding-left: 10px;
+  padding-right: 10px;
 
-  h2 {
-    margin: 0;
-    float: left;
+  $line-height: 30px;
+
+  .title {
+    position: absolute;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 18px;
+    line-height: $line-height;
+  }
+
+  .content {
+    text-align: center;
+    font-size: 12px;
+    line-height: $line-height;
   }
 }

@@ -1,0 +1,24 @@
+.neck {
+  padding: 5px 10px;
+  background-color: $bg-color;
+  border: 1px solid $divide-color;
+  border-left: 0;
+  border-right: 0;
+  line-height: 30px;
+
+  .usage {
+    width: 150px;
+    height: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #fff;
+    background-color: darken($bg-color, 10%);
+    border-radius: 4px;
+
+    .used {
+      height: 100%;
+      background-color: darken($bg-color, 30%);
+      border-radius: 4px;
+    }
+  }
+}

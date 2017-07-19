@@ -1,8 +1,8 @@
-import {_, Marionette, $} from './lib'
+import {_, Mn, $} from './lib'
 
-import AppView from './App'
+import AppView from './AppView'
 
-Marionette.View.setRenderer((template, data) => {
+Mn.View.setRenderer((template, data) => {
   switch (typeof template) {
     case 'function':
       return template(data)
