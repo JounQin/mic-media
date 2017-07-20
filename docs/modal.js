@@ -31,35 +31,38 @@ var on = function ($el, events) {
   }
 };
 
-var CONTENT_ID = '__material_library_dialog__';
+var ModalView = (function () {
+  function anonymous(ref) {
+  var el = ref.el;
+  var data = ref.data;
+  var template = ref.template;
 
-var compile = function (ref) {
-  if ( ref === void 0 ) ref = {};
-  var loading = ref.loading;
-  var materials = ref.materials;
-  var currIndex = ref.currIndex;
+    this.$el = $(el);
+    this.data = data;
+    this.template = template;
+    this.render();
+  }
 
-  if (loading) { return "Loading..." }
-  return ("<ul class=\"materials clearfix\">\n" + (map(materials, function (material, index) { return ("<li>\n    <div class=\"img-wrapper\" data-index=\"" + index + "\"><img src=\"" + (material.imgSrc) + "\"></div>\n  </li>"); }).join('')) + "\n</ul>" + (currIndex + 1 || ''))
-};
+  anonymous.prototype.get = function get (prop) {
+    return this.data[prop]
+  };
 
-var Model = function Model($el, attributes) {
-  this.$el = $el;
-  this.attributes = attributes;
-  this.render();
-};
+  anonymous.prototype.set = function set (newData) {
+    $.extend(this.data, newData);
+    this.render();
+  };
 
-Model.prototype.set = function set (newAttributes) {
-  $.extend(this.attributes, newAttributes);
-  this.render();
-};
-
-Model.prototype.render = function render () {
-  var ref = this;
+  anonymous.prototype.render = function render () {
+    var ref = this;
     var $el = ref.$el;
-  if (!$el || !$el.length) { return }
-  $el.html(compile(this.attributes) || '');
-};
+    if (!$el || !$el.length) { return }
+    $el.html(this.template(this.data) || '');
+  };
+
+  return anonymous;
+}());
+
+var CONTENT_ID = '__material_library_dialog__';
 
 var createDialog = function (options) {
   var $content = $(("#" + CONTENT_ID));
@@ -67,18 +70,30 @@ var createDialog = function (options) {
   $content = $(("<div id=\"" + CONTENT_ID + "\" class=\"material-library-content\"></div>"))
     .appendTo('body');
 
-  var model = new Model($content, {loading: true});
+  var mv = new ModalView({
+    el: $content,
+    data: {loading: true},
+    template: function (ref) {
+      if ( ref === void 0 ) ref = {};
+      var loading = ref.loading;
+      var materials = ref.materials;
+      var currIndex = ref.currIndex;
+
+      if (loading) { return "Loading..." }
+      return ("<ul class=\"materials clearfix\">\n" + (map(materials, function (material, index) { return ("<li>\n    <div class=\"img-wrapper\" data-index=\"" + index + "\"><img src=\"" + (material.imgSrc) + "\"></div>\n  </li>"); }).join('')) + "\n</ul>" + (currIndex + 1 || ''))
+    }
+  });
 
   on($content, {
     'click .img-wrapper': function click_img_wrapper(e) {
-      model.set({
+      mv.set({
         currIndex: $(e.currentTarget).data('index')
       });
     }
   });
 
   setTimeout(function () {
-    model.set({
+    mv.set({
       loading: false,
       materials: map([{
         imgSrc: 'image?tid=0&id=mEwTWQKMhgub',
@@ -96,22 +111,39 @@ var createDialog = function (options) {
     });
   }, 500);
 
+  var title = options.title;
+  var destroy = options.destroy;
+  var cancel = options.cancel;
+  var confirm = options.confirm;
+
   return _dialog({
-    title: options.title,
+    title: title,
     content: $content[0],
     skin: 'material-library-dialog',
-    cancel: function cancel() {
+    okValue: '确定',
+    ok: function ok() {
+      if(confirm.call(this) === false) { return false }
       this.close();
-      return false
+      return destroy
     },
-    cancelDisplay: false
+    cancelValue: '取消',
+    cancel: function cancel$1() {
+      if (cancel.call(this) === false) { return false }
+      this.close();
+      return destroy
+    }
   })
 };
 
 var dialog;
 
+var noop = function () {};
+
 var DEFAULT_OPTIONS = {
-  title: '素材库'
+  title: '素材库',
+  destroy: false,
+  cancel: noop,
+  confirm: noop
 };
 
 window.materialLibrary = function (options) {
@@ -121,7 +153,7 @@ window.materialLibrary = function (options) {
     dialog = createDialog(options);
   }
 
-  dialog.showModal();
+  return dialog.showModal()
 };
 
 }(jQuery,dialog));

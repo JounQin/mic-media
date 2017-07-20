@@ -153,7 +153,7 @@ var MainView = Mn.View.extend({
     });
   },
   onRender: function onRender() {
-    var ref = this.model.attributes;
+    var ref = this.model.data;
     var loading = ref.loading;
     var currIndex = ref.currIndex;
     var materials = ref.materials;

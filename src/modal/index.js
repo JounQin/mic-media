@@ -2,36 +2,9 @@ import $ from 'jquery'
 import _dialog from 'art-dialog'
 
 import {map, on} from './utils'
+import ModalView from './ModelView'
 
 const CONTENT_ID = '__material_library_dialog__'
-
-const compile = ({loading, materials, currIndex} = {}) => {
-  if (loading) return `Loading...`
-  return `<ul class="materials clearfix">
-${map(materials, (material, index) => `<li>
-    <div class="img-wrapper" data-index="${index}"><img src="${material.imgSrc}"></div>
-  </li>`).join('')}
-</ul>${currIndex + 1 || ''}`
-}
-
-class Model {
-  constructor($el, attributes) {
-    this.$el = $el
-    this.attributes = attributes
-    this.render()
-  }
-
-  set(newAttributes) {
-    $.extend(this.attributes, newAttributes)
-    this.render()
-  }
-
-  render() {
-    const {$el} = this
-    if (!$el || !$el.length) return
-    $el.html(compile(this.attributes) || '')
-  }
-}
 
 const createDialog = options => {
   let $content = $(`#${CONTENT_ID}`)
@@ -39,18 +12,29 @@ const createDialog = options => {
   $content = $(`<div id="${CONTENT_ID}" class="material-library-content"></div>`)
     .appendTo('body')
 
-  const model = new Model($content, {loading: true})
+  const mv = new ModalView({
+    el: $content,
+    data: {loading: true},
+    template: ({loading, materials, currIndex} = {}) => {
+      if (loading) return `Loading...`
+      return `<ul class="materials clearfix">
+${map(materials, (material, index) => `<li>
+    <div class="img-wrapper" data-index="${index}"><img src="${material.imgSrc}"></div>
+  </li>`).join('')}
+</ul>${currIndex + 1 || ''}`
+    }
+  })
 
   on($content, {
     'click .img-wrapper'(e) {
-      model.set({
+      mv.set({
         currIndex: $(e.currentTarget).data('index')
       })
     }
   })
 
   setTimeout(() => {
-    model.set({
+    mv.set({
       loading: false,
       materials: map([{
         imgSrc: 'image?tid=0&id=mEwTWQKMhgub',
@@ -68,22 +52,36 @@ const createDialog = options => {
     })
   }, 500)
 
+  const {title, destroy, cancel, confirm} = options
+
   return _dialog({
-    title: options.title,
+    title,
     content: $content[0],
     skin: 'material-library-dialog',
-    cancel() {
+    okValue: '确定',
+    ok() {
+      if (confirm.call(this) === false) return false
       this.close()
-      return false
+      return destroy
     },
-    cancelDisplay: false
+    cancelValue: '取消',
+    cancel() {
+      if (cancel.call(this) === false) return false
+      this.close()
+      return destroy
+    }
   })
 }
 
 let dialog
 
+const noop = () => {}
+
 const DEFAULT_OPTIONS = {
-  title: '素材库'
+  title: '素材库',
+  destroy: false,
+  cancel: noop,
+  confirm: noop
 }
 
 window.materialLibrary = (options) => {
@@ -93,5 +91,5 @@ window.materialLibrary = (options) => {
     dialog = createDialog(options)
   }
 
-  dialog.showModal()
+  return dialog.showModal()
 }
