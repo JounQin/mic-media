@@ -19,4 +19,4 @@ Mn.View.setRenderer((template, data) => {
   }
 })
 
-new AppView() // eslint-disable-line no-new
+new AppView().render()

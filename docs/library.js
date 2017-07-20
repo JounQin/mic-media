@@ -204,8 +204,7 @@ var AppView = Mn.View.extend({
       this.getChildView('body').loaded(materials);
     }
   },
-  initialize: function initialize() {
-    this.render();
+  onRender: function onRender() {
     this.showChildView('header', new HeaderView());
     this.showChildView('neck', new NeckView());
     this.showChildView('body', new BodyView());
@@ -229,6 +228,6 @@ Mn.View.setRenderer(function (template, data) {
   }
 });
 
-new AppView(); // eslint-disable-line no-new
+new AppView().render();
 
 }(jQuery,_,Backbone,Marionette));

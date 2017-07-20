@@ -20,8 +20,7 @@ export default Mn.View.extend({
       this.getChildView('body').loaded(materials)
     }
   },
-  initialize() {
-    this.render()
+  onRender() {
     this.showChildView('header', new HeaderView())
     this.showChildView('neck', new NeckView())
     this.showChildView('body', new BodyView())
