@@ -1,4 +1,4 @@
-import { _, Mn, $ } from './lib'
+import {_, Mn, $} from './lib'
 
 import AppView from './AppView'
 
