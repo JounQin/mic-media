@@ -153,7 +153,7 @@ var MainView = Mn.View.extend({
     });
   },
   onRender: function onRender() {
-    var ref = this.model.data;
+    var ref = this.model.attributes;
     var loading = ref.loading;
     var currIndex = ref.currIndex;
     var materials = ref.materials;
@@ -217,7 +217,12 @@ Mn.View.setRenderer(function (template, data) {
     case 'function':
       return template(data)
     case 'string':
-      /^<[\s\S]+\/?>$/.test(template) || (template = $(template).html() || template);
+      if (!/^<[\s\S]+\/?>$/.test(template)) {
+        try {
+          template = $(template).html() || template;
+        } catch (e) {
+        }
+      }
       return _.template(template)(data)
     default:
       throw new Error('template should be a function or string')

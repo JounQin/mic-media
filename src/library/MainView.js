@@ -64,7 +64,7 @@ ${model.get('currIndex') == null || model.get('loading') ? `<input type="checkbo
     })
   },
   onRender() {
-    const {loading, currIndex, materials} = this.model.data
+    const {loading, currIndex, materials} = this.model.attributes
     this.showChildView('content', loading ? new LoadingView() : currIndex == null ? new MaterialListView({
       collection: new MaterialList(materials)
     }) : new MaterialDetailView({

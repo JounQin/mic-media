@@ -122,7 +122,7 @@ var createDialog = function (options) {
     skin: 'material-library-dialog',
     okValue: '确定',
     ok: function ok() {
-      if(confirm.call(this) === false) { return false }
+      if (confirm.call(this) === false) { return false }
       this.close();
       return destroy
     },

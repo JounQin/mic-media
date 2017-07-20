@@ -1,4 +1,4 @@
-import {_, Mn, $} from './lib'
+import { _, Mn, $ } from './lib'
 
 import AppView from './AppView'
 
@@ -7,7 +7,12 @@ Mn.View.setRenderer((template, data) => {
     case 'function':
       return template(data)
     case 'string':
-      /^<[\s\S]+\/?>$/.test(template) || (template = $(template).html() || template)
+      if (!/^<[\s\S]+\/?>$/.test(template)) {
+        try {
+          template = $(template).html() || template
+        } catch (e) {
+        }
+      }
       return _.template(template)(data)
     default:
       throw new Error('template should be a function or string')
