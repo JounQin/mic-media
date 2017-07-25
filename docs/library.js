@@ -6,17 +6,17 @@ _ = _ && _.hasOwnProperty('default') ? _['default'] : _;
 Bb = Bb && Bb.hasOwnProperty('default') ? Bb['default'] : Bb;
 Mn = Mn && Mn.hasOwnProperty('default') ? Mn['default'] : Mn;
 
+var Model = Bb.Model;
+
 var HeaderView = Mn.View.extend({
   className: 'header',
   template: "<h4 class=\"title\">图片库</h4><div class=\"content\">找不到图片？图片可能被删除或转移到“未分组图片”。</div>"
 });
 
-var Neck = Bb.Model.extend();
-
 var NeckView = Mn.View.extend({
   className: 'neck clearfix',
   template: "<div class=\"pull-left\">\n  <div class=\"usage\">\n      <div class=\"used\" style=\"width: <%- used / total * 100 %>%\"></div>\n  </div>\n  剩余空间: <span class=\"left\"><%- used.toFixed(2) %></span> MB (共 <%- total %> MB)\n</div>\n<div class=\"pull-right\">\n  <input>\n  <button class=\"search-btn\">搜索</button>\n</div>",
-  model: new Neck({
+  model: new Model({
     used: Math.random() * 300,
     total: 300
   }),
@@ -94,8 +94,6 @@ var LoadingView = Mn.View.extend({
   template: '<div>loading...</div>'
 });
 
-var Main = Bb.Model.extend();
-
 var MainView = Mn.View.extend({
   className: 'main',
   getTemplate: function getTemplate() {
@@ -106,7 +104,7 @@ var MainView = Mn.View.extend({
   regions: {
     content: '.main-content-region'
   },
-  model: new Main({
+  model: new Model({
     loading: false,
     currIndex: null,
     materials: [{

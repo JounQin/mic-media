@@ -1,6 +1,4 @@
-import {Bb, Mn} from './lib'
-
-const Neck = Bb.Model.extend()
+import {Mn, Model} from './common'
 
 export default Mn.View.extend({
   className: 'neck clearfix',
@@ -14,7 +12,7 @@ export default Mn.View.extend({
   <input>
   <button class="search-btn">搜索</button>
 </div>`,
-  model: new Neck({
+  model: new Model({
     used: Math.random() * 300,
     total: 300
   }),

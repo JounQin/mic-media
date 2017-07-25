@@ -1,10 +1,8 @@
-import {Bb, Mn} from './lib'
+import {Mn, Model} from './common'
 
 import MaterialListView, {MaterialList} from './MateralListView'
 import MaterialDetailView, {MaterialDetail} from './MaterialDetailView'
 import LoadingView from './LoadingView'
-
-const Main = Bb.Model.extend()
 
 export default Mn.View.extend({
   className: 'main',
@@ -17,7 +15,7 @@ ${model.get('currIndex') == null || model.get('loading') ? `<input type="checkbo
   regions: {
     content: '.main-content-region'
   },
-  model: new Main({
+  model: new Model({
     loading: false,
     currIndex: null,
     materials: [{

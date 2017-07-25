@@ -1,4 +1,4 @@
-import {Mn} from './lib'
+import {Mn} from './common'
 
 export default Mn.View.extend({
   tagName: 'li',

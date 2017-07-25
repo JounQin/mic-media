@@ -1,4 +1,4 @@
-import {$, _, Bb, Mn} from './lib'
+import {$, _, Bb, Mn} from './common'
 
 export const MaterialDetail = Bb.Model.extend()
 

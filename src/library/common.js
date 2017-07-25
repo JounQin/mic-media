@@ -3,4 +3,6 @@ import underscore from 'underscore'
 import Backbone from 'backbone'
 import Marionette from 'backbone.marionette'
 
+export const Model = Backbone.Model
+
 export {jQuery as $, underscore as _, Backbone as Bb, Marionette as Mn}

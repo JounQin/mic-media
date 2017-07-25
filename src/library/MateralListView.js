@@ -1,4 +1,4 @@
-import {Bb, Mn} from './lib'
+import {Bb, Mn} from './common'
 
 import MaterialView from './MaterialView'
 

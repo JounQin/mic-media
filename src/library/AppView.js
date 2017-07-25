@@ -1,4 +1,4 @@
-import {Mn} from './lib'
+import {Mn} from './common'
 
 import HeaderView from './HeaderView'
 import NeckView from './NeckView'
