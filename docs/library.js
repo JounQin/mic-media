@@ -71,11 +71,13 @@ var MaterialListView = Mn.CollectionView.extend({
   }
 });
 
+var template = "<div class=\"material-detail\">\n  <% var currMaterial = materials[currIndex] %>\n  <div class=\"img-container\">\n    <div class=\"img-wrapper\">\n      <img src=\"<%- currMaterial.imgSrc.replace(/\\?tid=0/, '?tid=1') %>\">\n    </div>\n  </div>\n</div>\n<div class=\"material-list\">\n  <div class=\"prev\">\n    <button data-index=\"<%- currIndex - 1 %>\">Prev</button>\n  </div>\n  <ul class=\"clearfix list-unstyled\">\n    <% _.each(materials, function(material, index) { %>\n    <li class=\"material-item <%- index === currIndex ? 'active' : '' %>\" data-index=\"<%- index %>\">\n      <div class=\"img-wrapper\">\n        <img src=\"<%- material.imgSrc %>\">\n      </div>\n    </li>\n    <% }) %>\n  </ul>\n  <div class=\"next\">\n    <button data-index=\"<%- currIndex + 1 %>\">Next</button>\n  </div>\n</div>\n";
+
 var MaterialDetail = Bb.Model.extend();
 
 var MaterialDetailView = Mn.View.extend({
   className: 'material-detail-container',
-  template: "<div class=\"material-detail\">\n<% var currMaterial = materials[currIndex] %>\n  <div class=\"img-container\">\n    <div class=\"img-wrapper\">\n      <img src=\"<%- currMaterial.imgSrc.replace(/\\?tid=0/, '?tid=1') %>\">\n    </div>\n  </div>\n</div>\n<div class=\"material-list\">\n<div class=\"prev\"><button data-index=\"<%- currIndex - 1 %>\">Prev</button></div>\n<ul class=\"clearfix list-unstyled\">\n<% _.each(materials, function(material, index) { %>\n  <li class=\"material-item <%- index === currIndex ? 'active' : '' %>\" data-index=\"<%- index %>\">\n    <div class=\"img-wrapper\">\n      <img src=\"<%- material.imgSrc %>\">\n    </div>\n  </li>\n<%}) %>\n</ul>\n<div class=\"next\"><button data-index=\"<%- currIndex + 1 %>\">Next</button></div>\n</div>",
+  template: template,
   modelEvents: {
     change: 'render'
   },
@@ -214,7 +216,7 @@ Mn.View.setRenderer(function (template, data) {
     case 'function':
       return template(data)
     case 'string':
-      if (!/^<[\s\S]+\/?>$/.test(template)) {
+      if (!/^\s*<[\s\S]+\/?>\s*$/.test(template)) {
         try {
           template = $(template).html() || template;
         } catch (e) {

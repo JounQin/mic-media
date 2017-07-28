@@ -7,7 +7,7 @@ Mn.View.setRenderer((template, data) => {
     case 'function':
       return template(data)
     case 'string':
-      if (!/^<[\s\S]+\/?>$/.test(template)) {
+      if (!/^\s*<[\s\S]+\/?>\s*$/.test(template)) {
         try {
           template = $(template).html() || template
         } catch (e) {
