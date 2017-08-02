@@ -32,14 +32,15 @@ export default Mn.View.extend({
   },
   events: {
     'click .add-node'() {
-      const tree = this.model.get('tree')
-      const activeNode = this.activeNode ? this.activeNode.origin : tree
-      const node = {
+      const {activeNode} = this
+      const node = activeNode ? activeNode.origin : this.model.get('tree')
+      const {collection} = activeNode || this.getChildView('tree')
+      const newNode = {
         treeId: 0,
         treeName: 'my tree'
       }
-      activeNode.push(node)
-      this.getChildView('tree').collection.reset(tree)
+      node.push(newNode)
+      collection.push(newNode)
     }
   },
   renderTree() {

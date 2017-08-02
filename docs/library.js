@@ -198,7 +198,7 @@ var Node = Bb.Model.extend({
 var NodeView = Mn.View.extend({
   className: 'node',
   tagName: 'li',
-  template: "<% if(treeId) { %>\n  <div class=\"tree-node <%- treeId === container.get('treeId') ? 'active' : '' %>\">\n    <span class=\"tree-action\"><%- unfolded ? '-' : '+' %></span>\n    <span class=\"tree-name\"><%- treeName %></span>\n  </div>\n  <% } else { %>\n  <input/>\n  <% } %>\n  <% if(unfolded && nodes.length) { %>\n    <ul></ul>\n  <% } %>",
+  template: "<% if(treeId) { %>\n  <div class=\"tree-node <%- treeId === container.get('treeId') ? 'active' : '' %>\">\n    <span class=\"tree-action\"><%- unfolded ? '-' : '+' %></span>\n    <span class=\"tree-name\"><%- treeName %></span>\n  </div>\n  <% } else { %>\n  <input class=\"node-input\" value=\"<%- treeName %>\"/>\n  <% } %>\n  <% if(unfolded && nodes.length) { %>\n    <ul></ul>\n  <% } %>",
   regions: {
     tree: {
       el: 'ul',
@@ -222,11 +222,19 @@ var NodeView = Mn.View.extend({
     },
     'click .tree-name': function click_tree_name() {
       this.trigger('checkNode', this.model);
+    },
+    'blur .node-input': function blur_node_input() {
+      this.model.set({
+        treeId: Date.now()
+      });
     }
   },
   onRender: function onRender() {
+    var this$1 = this;
+
     var node = this.model;
     var nodes = node.get('nodes');
+    setTimeout(function () { return this$1.$('.node-input').select(); });
     if (!node.get('unfolded') || !nodes.length) { return }
     this.showChildView('tree', new TreeView({container: node.get('container'), tree: nodes}));
   }
@@ -284,14 +292,17 @@ var AppView = Mn.View.extend({
   },
   events: {
     'click .add-node': function click_add_node() {
-      var tree = this.model.get('tree');
-      var activeNode = this.activeNode ? this.activeNode.origin : tree;
-      var node = {
+      var ref = this;
+      var activeNode = ref.activeNode;
+      var node = activeNode ? activeNode.origin : this.model.get('tree');
+      var ref$1 = activeNode || this.getChildView('tree');
+      var collection = ref$1.collection;
+      var newNode = {
         treeId: 0,
         treeName: 'my tree'
       };
-      activeNode.push(node);
-      this.getChildView('tree').collection.reset(tree);
+      node.push(newNode);
+      collection.push(newNode);
     }
   },
   renderTree: function renderTree() {

@@ -16,7 +16,7 @@ const NodeView = Mn.View.extend({
     <span class="tree-name"><%- treeName %></span>
   </div>
   <% } else { %>
-  <input/>
+  <input class="node-input" value="<%- treeName %>"/>
   <% } %>
   <% if(unfolded && nodes.length) { %>
     <ul></ul>
@@ -44,11 +44,17 @@ const NodeView = Mn.View.extend({
     },
     'click .tree-name'() {
       this.trigger('checkNode', this.model)
+    },
+    'blur .node-input'() {
+      this.model.set({
+        treeId: Date.now()
+      })
     }
   },
   onRender() {
     const node = this.model
     const nodes = node.get('nodes')
+    setTimeout(() => this.$('.node-input').select())
     if (!node.get('unfolded') || !nodes.length) return
     this.showChildView('tree', new TreeView({container: node.get('container'), tree: nodes}))
   }
