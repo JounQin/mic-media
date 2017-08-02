@@ -5,7 +5,7 @@ import plumber from 'gulp-plumber'
 import autoprefixer from 'autoprefixer'
 import {rollup} from 'rollup'
 import buble from 'rollup-plugin-buble'
-import insert from 'rollup-plugin-insert'
+import {transform} from 'rollup-plugin-insert'
 import {argv} from 'yargs'
 
 const LIBRARY = 'library'
@@ -21,7 +21,7 @@ const styles = generate('scss')
 export const script = () => Promise.all(ENTRIES.map(entry => rollup({
   entry: `src/${entry}/index.js`,
   external: ['art-dialog', 'jquery', 'underscore', 'backbone', 'backbone.marionette'],
-  plugins: [insert.transform((code, id) => `export default ${JSON.stringify(code)}`, {
+  plugins: [transform((code, id) => `export default ${JSON.stringify(code)}`, {
     include: '**/*.html'
   }), buble()]
 }).then(bundle => bundle.write({
