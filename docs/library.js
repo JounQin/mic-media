@@ -1,3 +1,4 @@
+document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></script>');
 (function ($,_,Bb,Mn) {
 'use strict';
 
@@ -188,13 +189,70 @@ var BodyView = Mn.View.extend({
   }
 });
 
+var Node = Bb.Model.extend({
+  defaults: {
+    unfolded: false,
+    nodes: []
+  }
+});
+
+var NodeView = Mn.View.extend({
+  className: 'node',
+  tagName: 'li',
+  template: "<div class=\"tree-name\"><%- treeName %></div>\n  <% if(unfolded && nodes.length) { %>\n    <ul></ul>\n  <% } %>",
+  regions: {
+    tree: {
+      el: 'ul',
+      replaceElement: true
+    }
+  },
+  modelEvents: {
+    change: 'render'
+  },
+  events: {
+    'click .tree-name': function click_tree_name() {
+      var node = this.model;
+      var unfolded = !node.get('unfolded');
+      node.set({
+        unfolded: unfolded
+      });
+      node.origin.unfolded = unfolded;
+    }
+  },
+  onRender: function onRender() {
+    var node = this.model;
+    var nodes = node.get('nodes');
+    if (!node.get('unfolded') || !nodes.length) { return }
+    this.showChildView('tree', new TreeView({tree: nodes}));
+  }
+});
+
+var Tree = Bb.Collection.extend({
+  model: Node
+});
+
+var TreeView = Mn.CollectionView.extend({
+  className: 'tree',
+  tagName: 'ul',
+  childView: NodeView,
+  childViewOptions: function childViewOptions(model, index) {
+    model.origin = this.options.tree[index];
+  },
+  initialize: function initialize(ref) {
+    var tree = ref.tree;
+
+    this.collection = new Tree(tree);
+  }
+});
+
 var AppView = Mn.View.extend({
   el: '#app',
-  template: "<div class=\"header-region\"></div><div class=\"neck-region\"></div><div class=\"body-region\"></div>",
+  template: "<div class=\"header-region\"></div><div class=\"neck-region\"></div><div class=\"body-region\"></div><div class=\"tree-region\"></div>",
   regions: {
     header: '.header-region',
     neck: '.neck-region',
-    body: '.body-region'
+    body: '.body-region',
+    tree: '.tree-region'
   },
   childViewEvents: {
     loading: function loading() {
@@ -205,9 +263,63 @@ var AppView = Mn.View.extend({
     }
   },
   onRender: function onRender() {
+    var this$1 = this;
+
     this.showChildView('header', new HeaderView());
     this.showChildView('neck', new NeckView());
     this.showChildView('body', new BodyView());
+    this.showChildView('tree', new TreeView({
+      tree: [{
+        treeId: '1',
+        treeName: '1',
+        nodes: [{
+          treeId: '1-1',
+          treeName: '1-1',
+          nodes: [{
+            treeId: '1-1-1',
+            treeName: '1-1-1'
+          }, {
+            treeId: '1-1-2',
+            treeName: '1-1-2'
+          }, {
+            treeId: '1-1-3',
+            treeName: '1-1-3'
+          }]
+        }, {
+          treeId: '1-2',
+          treeName: '1-2',
+          nodes: [{
+            treeId: '1-2-1',
+            treeName: '1-2-1'
+          }]
+        }]
+      }, {
+        treeId: '2',
+        treeName: '2',
+        nodes: [{
+          treeId: '2-1',
+          treeName: '2-1'
+        }, {
+          treeId: '2-2',
+          treeName: '2-2',
+          nodes: [{
+            treeId: '2-2-1',
+            treeName: '2-2-1'
+          }, {
+            treeId: '2-2-2',
+            treeName: '2-2-2'
+          }, {
+            treeId: '2-2-3',
+            treeName: '2-2-3'
+          }]
+        }]
+      }]
+    }));
+
+    setTimeout(function () {
+      this$1.getChildView('tree').render();
+      console.log('rendered');
+    }, 5000);
   }
 });
 
