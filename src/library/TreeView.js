@@ -10,7 +10,14 @@ const Node = Bb.Model.extend({
 const NodeView = Mn.View.extend({
   className: 'node',
   tagName: 'li',
-  template: `<div class="tree-name"><%- treeName %></div>
+  template: `<% if(treeId) { %>
+  <div class="tree-node <%- treeId === container.get('treeId') ? 'active' : '' %>">
+    <span class="tree-action"><%- unfolded ? '-' : '+' %></span>
+    <span class="tree-name"><%- treeName %></span>
+  </div>
+  <% } else { %>
+  <input/>
+  <% } %>
   <% if(unfolded && nodes.length) { %>
     <ul></ul>
   <% } %>`,
@@ -20,24 +27,30 @@ const NodeView = Mn.View.extend({
       replaceElement: true
     }
   },
+  childViewEvents: {
+    checkNode(node) {
+      this.trigger('checkNode', node)
+    }
+  },
   modelEvents: {
     change: 'render'
   },
   events: {
-    'click .tree-name'() {
+    'click .tree-action'() {
       const node = this.model
       const unfolded = !node.get('unfolded')
-      node.set({
-        unfolded
-      })
-      node.origin.unfolded = unfolded
+      node.set({unfolded})
+      node.origin[node.collection.indexOf(node)].unfolded = unfolded
+    },
+    'click .tree-name'() {
+      this.trigger('checkNode', this.model)
     }
   },
   onRender() {
     const node = this.model
     const nodes = node.get('nodes')
     if (!node.get('unfolded') || !nodes.length) return
-    this.showChildView('tree', new TreeView({tree: nodes}))
+    this.showChildView('tree', new TreeView({container: node.get('container'), tree: nodes}))
   }
 })
 
@@ -49,8 +62,16 @@ const TreeView = Mn.CollectionView.extend({
   className: 'tree',
   tagName: 'ul',
   childView: NodeView,
-  childViewOptions(model, index) {
-    model.origin = this.options.tree[index]
+  childViewOptions(model) {
+    model.origin = this.options.tree
+    model.set({
+      container: this.options.container
+    })
+  },
+  childViewEvents: {
+    checkNode(node) {
+      this.trigger('checkNode', node)
+    }
   },
   initialize({tree}) {
     this.collection = new Tree(tree)

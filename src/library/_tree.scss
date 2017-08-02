@@ -1,0 +1,11 @@
+.tree {
+  .node {
+    list-style: none;
+
+    .tree-node {
+      &.active {
+        background-color: lightgray;
+      }
+    }
+  }
+}

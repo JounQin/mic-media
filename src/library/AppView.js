@@ -1,4 +1,4 @@
-import {Mn} from './common'
+import {Bb, Mn} from './common'
 
 import HeaderView from './HeaderView'
 import NeckView from './NeckView'
@@ -7,12 +7,16 @@ import TreeView from './TreeView'
 
 export default Mn.View.extend({
   el: '#app',
-  template: `<div class="header-region"></div><div class="neck-region"></div><div class="body-region"></div><div class="tree-region"></div>`,
+  template: `<div class="header-region"></div><div class="neck-region"></div><div class="body-region"></div><div class="tree-region"></div>
+<button class="add-node">Add Node</button>`,
   regions: {
     header: '.header-region',
     neck: '.neck-region',
     body: '.body-region',
     tree: '.tree-region'
+  },
+  modelEvents: {
+    'change:treeId': 'renderTree'
   },
   childViewEvents: {
     loading() {
@@ -20,13 +24,30 @@ export default Mn.View.extend({
     },
     loaded(materials) {
       this.getChildView('body').loaded(materials)
+    },
+    checkNode(node) {
+      this.model.set({treeId: node.get('treeId')})
+      this.activeNode = node
     }
   },
-  onRender() {
-    this.showChildView('header', new HeaderView())
-    this.showChildView('neck', new NeckView())
-    this.showChildView('body', new BodyView())
-    this.showChildView('tree', new TreeView({
+  events: {
+    'click .add-node'() {
+      const tree = this.model.get('tree')
+      const activeNode = this.activeNode ? this.activeNode.origin : tree
+      const node = {
+        treeId: 0,
+        treeName: 'my tree'
+      }
+      activeNode.push(node)
+      this.getChildView('tree').collection.reset(tree)
+    }
+  },
+  renderTree() {
+    this.getChildView('tree').render()
+  },
+  initialize() {
+    this.model = new Bb.Model({
+      treeId: null,
       tree: [{
         treeId: '1',
         treeName: '1',
@@ -72,11 +93,15 @@ export default Mn.View.extend({
           }]
         }]
       }]
+    })
+  },
+  onRender() {
+    this.showChildView('header', new HeaderView())
+    this.showChildView('neck', new NeckView())
+    this.showChildView('body', new BodyView())
+    this.showChildView('tree', new TreeView({
+      container: this.model,
+      tree: this.model.get('tree')
     }))
-
-    setTimeout(() => {
-      this.getChildView('tree').render()
-      console.log('rendered')
-    }, 5000)
   }
 })

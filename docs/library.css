@@ -135,3 +135,8 @@ body {
     height: 80px;
     line-height: 80px;
     font-size: 0; }
+
+.tree .node {
+  list-style: none; }
+  .tree .node .tree-node.active {
+    background-color: lightgray; }

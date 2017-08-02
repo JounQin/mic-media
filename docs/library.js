@@ -1,4 +1,3 @@
-document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></script>');
 (function ($,_,Bb,Mn) {
 'use strict';
 
@@ -199,31 +198,37 @@ var Node = Bb.Model.extend({
 var NodeView = Mn.View.extend({
   className: 'node',
   tagName: 'li',
-  template: "<div class=\"tree-name\"><%- treeName %></div>\n  <% if(unfolded && nodes.length) { %>\n    <ul></ul>\n  <% } %>",
+  template: "<% if(treeId) { %>\n  <div class=\"tree-node <%- treeId === container.get('treeId') ? 'active' : '' %>\">\n    <span class=\"tree-action\"><%- unfolded ? '-' : '+' %></span>\n    <span class=\"tree-name\"><%- treeName %></span>\n  </div>\n  <% } else { %>\n  <input/>\n  <% } %>\n  <% if(unfolded && nodes.length) { %>\n    <ul></ul>\n  <% } %>",
   regions: {
     tree: {
       el: 'ul',
       replaceElement: true
     }
   },
+  childViewEvents: {
+    checkNode: function checkNode(node) {
+      this.trigger('checkNode', node);
+    }
+  },
   modelEvents: {
     change: 'render'
   },
   events: {
-    'click .tree-name': function click_tree_name() {
+    'click .tree-action': function click_tree_action() {
       var node = this.model;
       var unfolded = !node.get('unfolded');
-      node.set({
-        unfolded: unfolded
-      });
-      node.origin.unfolded = unfolded;
+      node.set({unfolded: unfolded});
+      node.origin[node.collection.indexOf(node)].unfolded = unfolded;
+    },
+    'click .tree-name': function click_tree_name() {
+      this.trigger('checkNode', this.model);
     }
   },
   onRender: function onRender() {
     var node = this.model;
     var nodes = node.get('nodes');
     if (!node.get('unfolded') || !nodes.length) { return }
-    this.showChildView('tree', new TreeView({tree: nodes}));
+    this.showChildView('tree', new TreeView({container: node.get('container'), tree: nodes}));
   }
 });
 
@@ -235,8 +240,16 @@ var TreeView = Mn.CollectionView.extend({
   className: 'tree',
   tagName: 'ul',
   childView: NodeView,
-  childViewOptions: function childViewOptions(model, index) {
-    model.origin = this.options.tree[index];
+  childViewOptions: function childViewOptions(model) {
+    model.origin = this.options.tree;
+    model.set({
+      container: this.options.container
+    });
+  },
+  childViewEvents: {
+    checkNode: function checkNode(node) {
+      this.trigger('checkNode', node);
+    }
   },
   initialize: function initialize(ref) {
     var tree = ref.tree;
@@ -247,12 +260,15 @@ var TreeView = Mn.CollectionView.extend({
 
 var AppView = Mn.View.extend({
   el: '#app',
-  template: "<div class=\"header-region\"></div><div class=\"neck-region\"></div><div class=\"body-region\"></div><div class=\"tree-region\"></div>",
+  template: "<div class=\"header-region\"></div><div class=\"neck-region\"></div><div class=\"body-region\"></div><div class=\"tree-region\"></div>\n<button class=\"add-node\">Add Node</button>",
   regions: {
     header: '.header-region',
     neck: '.neck-region',
     body: '.body-region',
     tree: '.tree-region'
+  },
+  modelEvents: {
+    'change:treeId': 'renderTree'
   },
   childViewEvents: {
     loading: function loading() {
@@ -260,15 +276,30 @@ var AppView = Mn.View.extend({
     },
     loaded: function loaded(materials) {
       this.getChildView('body').loaded(materials);
+    },
+    checkNode: function checkNode(node) {
+      this.model.set({treeId: node.get('treeId')});
+      this.activeNode = node;
     }
   },
-  onRender: function onRender() {
-    var this$1 = this;
-
-    this.showChildView('header', new HeaderView());
-    this.showChildView('neck', new NeckView());
-    this.showChildView('body', new BodyView());
-    this.showChildView('tree', new TreeView({
+  events: {
+    'click .add-node': function click_add_node() {
+      var tree = this.model.get('tree');
+      var activeNode = this.activeNode ? this.activeNode.origin : tree;
+      var node = {
+        treeId: 0,
+        treeName: 'my tree'
+      };
+      activeNode.push(node);
+      this.getChildView('tree').collection.reset(tree);
+    }
+  },
+  renderTree: function renderTree() {
+    this.getChildView('tree').render();
+  },
+  initialize: function initialize() {
+    this.model = new Bb.Model({
+      treeId: null,
       tree: [{
         treeId: '1',
         treeName: '1',
@@ -314,12 +345,16 @@ var AppView = Mn.View.extend({
           }]
         }]
       }]
+    });
+  },
+  onRender: function onRender() {
+    this.showChildView('header', new HeaderView());
+    this.showChildView('neck', new NeckView());
+    this.showChildView('body', new BodyView());
+    this.showChildView('tree', new TreeView({
+      container: this.model,
+      tree: this.model.get('tree')
     }));
-
-    setTimeout(function () {
-      this$1.getChildView('tree').render();
-      console.log('rendered');
-    }, 5000);
   }
 });
 
