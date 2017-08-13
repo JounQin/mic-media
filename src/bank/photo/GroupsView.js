@@ -19,12 +19,6 @@ const GroupView = Mn.View.extend({
   className: 'group',
   tagName: 'li',
   template,
-  regions: {
-    groups: {
-      el: 'ul',
-      replaceElement: true
-    }
-  },
   modelEvents: {
     change: 'render'
   },
@@ -174,6 +168,8 @@ export default Mn.CollectionView.extend({
   initialize() {
     const {photo} = stores
     this.collection = new Groups(photo.get('groups'))
-    this.listenTo(photo, 'change:groups', () => this.collection.reset(photo.get('groups')))
+    this.listenTo(photo, 'change:groups', (photo, groups) => {
+      this.collection.reset(groups)
+    })
   }
 })
