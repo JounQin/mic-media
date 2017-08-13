@@ -1,0 +1,27 @@
+<% if(sourceType === 'custom') { %>
+<select name="posterId">
+    <option value=""
+    <%- posterId === null ? 'selected' : '' %>><%- I18N.poster %></option>
+    <% _.each(posters, function(poster) { %>
+    <option value="<%- poster.posterId %>"
+    <%- posterId === poster.posterId ? 'selected' : '' %>><%- poster.posterName %></option>
+    <% }) %>
+</select>
+<select name="mediumStatus">
+    <option value=""
+    <%- mediumStatus === null ? 'selected' : '' %>><%- I18N.reviewStatus %></option>
+    <% _.each(reviewStatuses, function(status) { %>
+    <option value="<%- status.type %>"
+    <%- mediumStatus === status.type ? 'selected' : '' %>><%- status.text %></option>
+    <% }) %>
+</select>
+<% } %>
+<select name="cited">
+    <option value=""
+    <%- cited === null ? 'selected' : '' %>><%- I18N.isCited %></option>
+    <option value="yes"
+    <%- cited === true ? 'selected' : '' %>><%- I18N.yes %></option>
+    <option value="no"
+    <%- cited === false ? 'selected' : '' %>><%- I18N.no %></option>
+</select>
+<ul class="sort-types"></ul>

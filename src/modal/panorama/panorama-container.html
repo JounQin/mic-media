@@ -1,0 +1,30 @@
+<div class="tabs-region">
+    <div class="fr list-type J-toggle-list-type">
+        <i class="ob-icon icon-gallery <%- viewType === 'thumbnail' ? 'active' : '' %>"></i>
+        <i class="ob-icon icon-list <%- viewType === 'list' ? 'active' : '' %>"></i>
+    </div>
+</div>
+<div class="panorama-wrap obelisk-form">
+    <% if(viewType==='thumbnail') {%>
+    <div class="panorama-region"></div>
+    <% } else { %>
+    <div class="panorama-region">
+        <table class="panorama-table">
+            <thead>
+            <tr>
+                <td class="panorama-img"></td>
+                <td class="panorama-name"><%- I18N.name %></td>
+                <td class="panorama-size"><%- I18N.size %></td>
+                <td class="panorama-date"><%- I18N.updatedDate %></td>
+            </tr>
+            </thead>
+            <tbody class="panorama-region">
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+</div>
+<div class="pager-region"></div>
+<div class="link-text">
+    <a href="#" target="_blank"><%- I18N.visitPanoramaBank %> <i class="ob-icon icon-right"></i></a>
+</div>

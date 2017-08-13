@@ -1,0 +1,24 @@
+<% if (viewType === 'thumbnail') { %>
+<div class="panorama-item J-panorama-item">
+    <a class="img-wrapper" href="<%- mediumSrc %>" target="_blank">
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+    </a>
+    <div class="panorama-mane"><%- mediumName %></div>
+    <div class="panorama-attrs">
+        <div class="fake-panorama-name"><%- mediumName %></div>
+        <ul class="panorama-info">
+            <li class="panorama-attr"><%- I18N.size %>：<%- mediumSize %></li>
+            <li class="panorama-attr"><%- I18N.updatedDate %>：<%- updateTime %></li>
+        </ul>
+    </div>
+</div>
+<% } else { %>
+<td class="panorama-img">
+    <a class="img-wrapper" href="<%- mediumSrc %>" target="_blank">
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+    </a>
+</td>
+<td class="panorama-name"><%- mediumName %></td>
+<td class="panorama-size"><%- mediumSize %></td>
+<td class="panorama-date"><%- updateTime %></td>
+<% } %>

@@ -1,0 +1,27 @@
+<% if (viewType === 'thumbnail') { %>
+<div class="flash-item">
+    <div class="img-wrapper J-image" data-index="<%- mediumId %>">
+        <img src="<%- mediumSrc[0] %>" alt="<%- mediumName %>">
+        <div class="image-outside"><i class="ob-icon icon-play"></i></div>
+    </div>
+    <div class="flash-attrs">
+        <ul class="flash-attr">
+            <li><%- I18N.size %>：<%- mediumSize %></li>
+            <li><%- I18N.duration %>：<%- mediumDuration %></li>
+            <li><%- I18N.updatedDate %>：<%- updateTime %></li>
+            <li><%- I18N.linkedProduct %>：<a href="<%- relatedProductLink %>"><%- relatedProductName %></a></li>
+        </ul>
+    </div>
+</div>
+<% } else { %>
+<td class="flash-img">
+    <div class="img-wrapper J-image" data-index="<%- mediumId %>">
+        <img src="<%- mediumSrc[0] %>" alt="<%- mediumName %>">
+        <div class="image-outside"><i class="ob-icon icon-play"></i></div>
+    </div>
+</td>
+<td class="flash-size"><%- mediumSize %></td>
+<td class="flash-duration"><%- mediumDuration %></td>
+<td class="flash-date"><%- updateTime %></td>
+<td class="flash-linked"><a href="<%- relatedProductLink %>"><%- relatedProductName %></a></td>
+<% } %>

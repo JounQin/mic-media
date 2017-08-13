@@ -1,0 +1,283 @@
+.media-region {
+  position: absolute;
+  top: 130px;
+  bottom: 0;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .photos-wrapper {
+    &.list {
+      padding-left: 10px;
+    }
+
+    &.thumbnail .pager {
+      margin-left: 10px;
+    }
+  }
+
+  .photos-table {
+    width: 100%;
+
+    .photo-size,
+    .photo-pixel,
+    .photo-poster,
+    .photo-status,
+    .photo-update-time,
+    .photo-cited-times,
+    .photo-operation {
+      @include box-sizing;
+      width: 100px;
+      padding: 10px;
+      white-space: nowrap;
+    }
+
+    .photo-size .fake-photo-pixel {
+      display: none;
+    }
+
+    .photo-info {
+      position: relative;
+      padding-left: 37px;
+
+      .input-checkbox {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        margin-top: -15px;
+      }
+
+      .photo-name {
+        max-width: 134px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .photo-cited-times .times {
+      color: #1470cc;
+      cursor: pointer;
+    }
+
+    .photo-operation {
+      .rename, .delete {
+        cursor: pointer;
+        color: #1470cc;
+      }
+    }
+
+    thead {
+      color: #888;
+
+      td {
+        padding: 10px;
+      }
+
+      .photo-info {
+        padding-left: 106px;
+
+        .input-ctnr {
+          margin-right: 11px;
+        }
+      }
+    }
+
+    tbody {
+      color: #555;
+
+      td {
+        border-top: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+        padding: 20px 10px;
+
+        .img-wrapper {
+          @include inline-block;
+          position: relative;
+          background-color: #f5f7fa;
+          margin-right: 9px;
+        }
+
+        .photo-name {
+          @include inline-block;
+          white-space: nowrap;
+
+          .input-text {
+            @include inline-block;
+            margin-right: 0;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .photos {
+    .folder, .folder-small {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+
+    &.thumbnail {
+      margin-top: 8px;
+      margin-left: 10px;
+      padding-bottom: 40px;
+
+      .photo {
+        @include inline-block;
+        @include box-sizing;
+        width: 20%;
+        padding: 10px 34px 20px 0;
+      }
+
+      .photo-item {
+        position: relative;
+        width: 100%;
+
+        &:hover {
+          .input-checkbox {
+            z-index: 2
+          }
+
+          .input-checkbox, .photo-hover {
+            display: block;
+          }
+
+          .photo-checked {
+            display: none;
+          }
+        }
+
+        &.checked {
+          .input-checkbox, .photo-checked {
+            display: block;
+          }
+        }
+
+        &.editing {
+          .input-checkbox, .photo-hover, .photo-checked {
+            display: none;
+          }
+
+          .photo-name {
+            margin-top: 4px;
+          }
+
+          .input-text {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            height: 24px;
+          }
+        }
+
+        .input-checkbox {
+          display: none;
+          position: absolute;
+          top: -2px;
+          left: 0;
+
+          .input-wrap {
+            margin: 0;
+          }
+        }
+      }
+
+      .img-wrapper {
+        @include img-wrapper(100%, 160px);
+        position: relative;
+        background-color: #f5f7fa;
+      }
+
+      .photo-name {
+        margin-top: 10px;
+        color: #555;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        .input-text {
+          width: 100%;
+          margin-right: 0;
+        }
+      }
+
+      .photo-checked {
+        @include box-sizing;
+        display: none;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        bottom: -10px;
+        left: -10px;
+        border: 1px solid #ced3d9;
+        border-radius: 3px;
+      }
+
+      .photo-hover {
+        @include box-sizing;
+        display: none;
+        position: absolute;
+        z-index: 1;
+        top: -10px;
+        right: -10px;
+        left: -10px;
+        border: 1px solid #ced3d9;
+        border-radius: 3px;
+        padding-top: 179px;
+      }
+
+      .fake-img-wrapper {
+        position: absolute;
+        top: 9px;
+        left: 9px;
+        right: 9px;
+        height: 160px;
+      }
+
+      .fake-photo-name {
+        padding-left: 9px;
+        padding-right: 9px;
+        max-height: 36px;
+        overflow: hidden;
+        color: #555;
+        background-color: #fff;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      .photo-info {
+        background-color: #fff;
+        padding: 10px 9px;
+        color: #888;
+      }
+
+      .hover-actions {
+        background-color: #f5f7fa;
+
+        .action {
+          @include box-sizing;
+          width: 50%;
+          color: #1470cc;
+          float: left;
+          padding: 10px;
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .pager {
+    padding-top: 30px;
+    padding-bottom: 80px;
+  }
+
+  .photos-region + .pager-region .pager {
+    border-top: 1px solid #e6ecf2;
+  }
+}

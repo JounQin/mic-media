@@ -1,0 +1,81 @@
+ul.panoramas {
+  .panorama {
+    @include inline-block;
+    @include box-sizing;
+    padding: 0 5px 20px;
+    width: 25%;
+  }
+  .panorama-item {
+    width: 160px;
+    height: 110px;
+    position: relative;
+    padding: 5px;
+    border: 1px solid #1470cc;
+    border-radius: 3px;
+  }
+  .img-wrapper {
+    @include img-wrapper(160px, 80px);
+    display: block;
+  }
+  .panorama-mane {
+    padding-top: 10px;
+    color: #555;
+    overflow: hidden;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
+  .input-radio {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    line-height: initial;
+  }
+  .panorama-enlarge {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #fff;
+    background: #7e8184;
+    text-align: center;
+  }
+}
+
+.panorama-table {
+  width: 100%;
+  thead tr td{
+    padding: 0 0 10px 5px;
+  }
+  .pl-5 {
+    padding-left: 5px;
+  }
+  .panorama {
+    border-top: 1px solid #e6ecf2;
+    height: 100px;
+  }
+  .panorama-img {
+    width: 160px;
+    position: relative;
+    .img-wrapper {
+      width: 120px;
+      height: 60px;
+      margin-left: 35px;
+      display: block;
+    }
+    .input-radio {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      margin-top: -15px;
+    }
+  }
+  .panorama-size {
+    width: 120px;
+  }
+  .panorama-date {
+    width: 140px;
+  }
+
+}

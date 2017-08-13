@@ -1,0 +1,52 @@
+<div class="search-region">
+    <form class="obelisk-form cf" action="javascript:;">
+        <div class="text-item span-9 fl">
+            <label class="input-wrap">
+                <span class="input-head">
+                    <i class="ob-icon icon-search"></i>
+                </span>
+                <div class="input-cnt">
+                    <input class="input-text">
+                    <span class="input-ctnr"></span>
+                </div>
+            </label>
+        </div>
+        <select name="">
+            <option value="">aa</option>
+            <option value="">bb</option>
+            <option value="">cc</option>
+            <option value="">dd</option>
+            <option value="">ee</option>
+        </select>
+    </form>
+</div>
+<div class="tabs-region">
+    <div class="fr list-type J-toggle-list-type">
+        <i class="ob-icon icon-gallery <%- viewType === 'thumbnail' ? 'active' : '' %>"></i>
+        <i class="ob-icon icon-list <%- viewType === 'list' ? 'active' : '' %>"></i>
+    </div>
+</div>
+<div class="photo-wrap obelisk-form">
+    <% if(viewType==='thumbnail') {%>
+    <div class="photo-region"></div>
+    <% } else { %>
+    <div class="photo-region">
+        <table class="photo-table">
+            <thead>
+            <tr>
+                <td class="photo-img"></td>
+                <td class=""><%- I18N.name %></td>
+                <td class=""><%- I18N.size %></td>
+                <td class=""><%- I18N.updatedDate %></td>
+            </tr>
+            </thead>
+            <tbody class="photo-region">
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+</div>
+<div class="pager-region"></div>
+<div class="link-text">
+    <a href="#"><%- I18N.visitPhotoBank %> <i class="ob-icon icon-right"></i></a>
+</div>

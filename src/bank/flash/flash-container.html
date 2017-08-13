@@ -1,0 +1,41 @@
+<div class="body">
+    <div class="tabs-region">
+        <div class="fr pager-simple">
+            <span class="page-num"><%- currPage %>/<%- totalPage %> <%- I18N.pageSuffix %></span>
+            <div class="pager-box cf">
+                <button class="page J-toggle-page" data-page="<%- currPage - 1%>"
+                <%- currPage === 1 ? 'disabled' : '' %>><i class="ob-icon icon-left"></i></button>
+                <button class="page J-toggle-page" data-page="<%- currPage + 1 %>"
+                <%- currPage === totalPage ? 'disabled' : '' %>><i class="ob-icon icon-right"></i></button>
+            </div>
+        </div>
+        <div class="fr list-type J-toggle-list-type">
+            <i class="ob-icon icon-gallery <%- viewType === 'thumbnail' ? 'active' : '' %>"></i>
+            <i class="ob-icon icon-list <%- viewType === 'list' ? 'active' : '' %>"></i>
+        </div>
+
+    </div>
+    <div class="flash-wrap">
+        <% if(viewType==='thumbnail') {%>
+            <div class="flash-region"></div>
+            <div class="pager-region"></div>
+        <% } else { %>
+        <div class="flash-region">
+            <table class="flash-table">
+                <thead>
+                <tr>
+                    <td class="flash-img"><%- I18N.flashes %></td>
+                    <td class="flash-size"><%- I18N.size %></td>
+                    <td class="flash-duration"><%- I18N.duration %></td>
+                    <td class="flash-date"><%- I18N.updatedDate %></td>
+                    <td class="flash-linked"><%- I18N.linkedProduct %></td>
+                </tr>
+                </thead>
+                <tbody class="flash-region">
+                </tbody>
+            </table>
+            <div class="pager-region"></div>
+        </div>
+        <% } %>
+    </div>
+</div>

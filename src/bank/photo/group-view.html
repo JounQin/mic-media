@@ -1,0 +1,17 @@
+<% if(editing) {%>
+<div class="group-item obelisk-form">
+    <input class="input-text span-9" placeholder="Search Products" value="<%- groupName %>">
+</div>
+<% } else { %>
+<div class="group-item <%- isActive ? 'active' : '' %>">
+    <div class="group-name">
+        <%- groupId ? groupName : keyword ? '搜索结果"' + keyword + '"' :I18N.allPhotos %>
+    </div>
+    <% if (groupId !== null && groupId !== '-1') { %>
+    <div class="group-actions">
+        <i class="ob-icon icon-fill-text J-edit-group"></i>
+        <i class="ob-icon icon-recycle J-delete-group"></i>
+    </div>
+    <% } %>
+</div>
+<% } %>

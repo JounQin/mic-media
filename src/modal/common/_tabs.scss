@@ -1,0 +1,38 @@
+.tabs {
+  text-align: center;
+  margin-top: 30px;
+
+  .tab-list {
+    margin-bottom: -2px;
+    @include inline-block;
+
+    > li {
+      @include inline-block;
+      position: relative;
+      padding: 10px 0;
+      cursor: pointer;
+
+      + li {
+        margin-left: 40px;
+      }
+
+      &.active {
+        border-bottom: 2px solid;
+        font-weight: bold;
+        color: #e64545;
+      }
+
+      &.highlight .highlight-circle {
+        @include inline-block;
+      }
+    }
+  }
+
+  .highlight-circle {
+    @include circle(5px, red);
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 0;
+  }
+}

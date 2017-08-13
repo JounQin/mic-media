@@ -1,0 +1,15 @@
+.photo-container {
+  @import "tabs";
+  @import "side";
+  @import "body";
+
+  .content {
+    @include box-sizing;
+    position: absolute;
+    width: 100%;
+    top: 90px;
+    bottom: 80px;
+    border: 1px solid #e6ecf2;
+    background-color: #fff;
+  }
+}

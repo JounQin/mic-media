@@ -1,0 +1,25 @@
+.main {
+  @include box-sizing;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  margin-left: -640px;
+  transition: top .5s;
+  max-width: 1280px;
+
+  &.search-active {
+    top: 102px;
+  }
+
+  .pager {
+    text-align: center;
+  }
+}
+
+@import "flash/flash-container";
+@import "panorama/panorama-container";
+@import "photo/photo-container";
+@import "trash/trash-container";
+@import "video/video-container";

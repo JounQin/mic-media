@@ -1,0 +1,177 @@
+.body {
+  @import "photos";
+
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  bottom: 0;
+  left: 20px;
+
+  .child-groups {
+    display: none;
+    padding-left: 10px;
+
+    &.active {
+      display: block;
+
+      ~ .media-region {
+        top: 158px;
+      }
+    }
+
+    .crumb span.parent {
+      color: #555;
+      cursor: pointer;
+
+      &:hover {
+        color: #f73;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.cameraman {
+    .actions {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f5f7fa;
+    }
+  }
+
+  .operations {
+    &, .btn + .btn {
+      margin-left: 10px;
+    }
+
+    .filter-sort {
+      @include inline-block;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+  }
+
+  .list-type {
+    background-color: #f5f7fa;
+    border: 1px solid #ced3d9;
+    border-radius: 3px;
+    font-size: 0;
+
+    .ob-icon {
+      @include inline-block;
+      cursor: pointer;
+      line-height: 28px;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      + .ob-icon {
+        border-left: 1px solid #ced3d9;
+      }
+
+      &.active {
+        color: #e64545;
+      }
+    }
+  }
+
+  .pager-simple {
+    margin-left: 20px;
+
+    .page {
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &[disabled] {
+        background-color: #edf0f2;
+      }
+    }
+  }
+
+  .filter-sort {
+    margin-top: 20px;
+    margin-left: 10px;
+    background-color: #f5f7fa;
+    padding: 10px;
+
+    .select {
+      margin-right: 8px;
+    }
+  }
+
+  .sort-types {
+    @include box-sizing;
+    height: 30px;
+    border: 1px solid #ced3d9;
+    border-radius: 3px;
+    font-size: 0;
+
+    &, > li {
+      @include inline-block;
+    }
+
+    > li {
+      padding: 0 16px;
+      cursor: pointer;
+      line-height: 28px;
+      border-right: 1px solid #ced3d9;
+      background-color: #fff;
+      font-size: 12px;
+
+      &:first-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+      }
+
+      &:last-child {
+        border-right: 0;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
+
+    .sort-type-icon {
+      @include inline-block;
+      margin-top: -1px;
+      margin-left: 3px;
+    }
+  }
+
+  .actions {
+    margin-left: 10px;
+
+    .input-checkbox, .actions-detail {
+      @include inline-block;
+    }
+
+    .actions-detail {
+      line-height: 30px;
+      padding-left: 8px;
+
+      &:first-child {
+        padding-left: 10px;
+      }
+    }
+
+    .checked-num {
+      margin-right: 30px;
+    }
+
+    .action {
+      color: #1470cc;
+      padding-left: 8px;
+      padding-right: 8px;
+      cursor: pointer;
+    }
+
+    .move-to {
+      border-right: 1px solid #dae0e6;
+    }
+
+    .delete .ob-icon {
+      position: relative;
+      top: -1px;
+    }
+  }
+}

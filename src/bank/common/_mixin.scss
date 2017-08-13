@@ -1,0 +1,27 @@
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+@mixin circle($size, $bg-color: null) {
+  @include square($size);
+  border-radius: 50%;
+
+  @if ($bg-color) {
+    background-color: $bg-color;
+  }
+}
+
+@mixin img-wrapper($width: 60px, $height: $width) {
+  width: $width;
+  height: $height;
+  line-height: $height;
+  text-align: center;
+  font-size: 0;
+
+  > img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+  }
+}

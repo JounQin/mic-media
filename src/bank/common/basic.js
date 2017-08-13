@@ -1,0 +1,6 @@
+export {default as $} from 'jquery'
+export {default as _} from 'underscore'
+export {default as Bb} from 'backbone'
+export {default as Mn} from 'backbone.marionette'
+export const supportHtml5 = typeof document.createElement('canvas').getContext === 'function'
+export const sizeLimit = supportHtml5 ? '5MB' : '500KB'

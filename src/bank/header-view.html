@@ -1,0 +1,41 @@
+<div class="head">
+    <button class="btn btn-small left"><i class="ob-icon icon-left"></i><%- I18N.goBack %></button>
+    <div class="toggle-active J-toggle-active"><%- types[activeIndex].text %><i class="ob-icon"></i></div>
+    <div class="types J-types">
+        <ul>
+            <% _.each(types, function(type, index) { %>
+            <li class="J-toggle-type">
+                <div class="img-wrapper">
+                    <div class="<%- type.type %>-<%- index === activeIndex ? 'active' : 'default' %>"></div>
+                </div>
+                <%- type.text %>
+            </li>
+            <% }) %>
+        </ul>
+    </div>
+    <% if(activeType === 'photo') { %>
+    <button class="btn btn-small right J-toggle-search">
+        <i class="ob-icon icon-search"></i><%- I18N.searchPhotos %>
+    </button>
+</div>
+<div class="search">
+    <form class="obelisk-form cf" action="javascript:;">
+        <div class="text-item span-17 fl">
+            <label class="input-wrap">
+                <div class="input-cnt">
+                    <input class="input-text" placeholder="搜索图片">
+                    <span class="input-ctnr"></span>
+                </div>
+            </label>
+        </div>
+        <button class="btn btn-small search-btn fl J-search-photo">
+            <i class="ob-icon icon-search"></i>
+        </button>
+        <div class="close-search fr J-close-search">
+            <i class="ob-icon icon-delete"></i>
+        </div>
+    </form>
+</div>
+<% } else { %>
+</div>
+<% } %>

@@ -1,0 +1,222 @@
+// SCSS variables are information about icon's compiled state, stored under its original file name
+//
+// .icon-home {
+//   width: $icon-home-width;
+// }
+//
+// The large array-like variables contain all information about a single icon
+// $icon-home: x y offset_x offset_y width height total_width total_height image_path;
+//
+// At the bottom of this section, we provide information about the spritesheet itself
+// $spritesheet: width height image $spritesheet-sprites;
+$flash-active-name: 'flash-active';
+$flash-active-x: 112px;
+$flash-active-y: 0px;
+$flash-active-offset-x: -112px;
+$flash-active-offset-y: 0px;
+$flash-active-width: 112px;
+$flash-active-height: 112px;
+$flash-active-total-width: 336px;
+$flash-active-total-height: 336px;
+$flash-active-image: 'bank-sprite.png';
+$flash-active: (112px, 0px, -112px, 0px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'flash-active', );
+$flash-default-name: 'flash-default';
+$flash-default-x: 0px;
+$flash-default-y: 224px;
+$flash-default-offset-x: 0px;
+$flash-default-offset-y: -224px;
+$flash-default-width: 112px;
+$flash-default-height: 112px;
+$flash-default-total-width: 336px;
+$flash-default-total-height: 336px;
+$flash-default-image: 'bank-sprite.png';
+$flash-default: (0px, 224px, 0px, -224px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'flash-default', );
+$folder-small-name: 'folder-small';
+$folder-small-x: 224px;
+$folder-small-y: 290px;
+$folder-small-offset-x: -224px;
+$folder-small-offset-y: -290px;
+$folder-small-width: 44px;
+$folder-small-height: 38px;
+$folder-small-total-width: 336px;
+$folder-small-total-height: 336px;
+$folder-small-image: 'bank-sprite.png';
+$folder-small: (224px, 290px, -224px, -290px, 44px, 38px, 336px, 336px, 'bank-sprite.png', 'folder-small', );
+$folder-name: 'folder';
+$folder-x: 224px;
+$folder-y: 224px;
+$folder-offset-x: -224px;
+$folder-offset-y: -224px;
+$folder-width: 76px;
+$folder-height: 66px;
+$folder-total-width: 336px;
+$folder-total-height: 336px;
+$folder-image: 'bank-sprite.png';
+$folder: (224px, 224px, -224px, -224px, 76px, 66px, 336px, 336px, 'bank-sprite.png', 'folder', );
+$panorama-active-name: 'panorama-active';
+$panorama-active-x: 224px;
+$panorama-active-y: 0px;
+$panorama-active-offset-x: -224px;
+$panorama-active-offset-y: 0px;
+$panorama-active-width: 112px;
+$panorama-active-height: 112px;
+$panorama-active-total-width: 336px;
+$panorama-active-total-height: 336px;
+$panorama-active-image: 'bank-sprite.png';
+$panorama-active: (224px, 0px, -224px, 0px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'panorama-active', );
+$panorama-default-name: 'panorama-default';
+$panorama-default-x: 224px;
+$panorama-default-y: 112px;
+$panorama-default-offset-x: -224px;
+$panorama-default-offset-y: -112px;
+$panorama-default-width: 112px;
+$panorama-default-height: 112px;
+$panorama-default-total-width: 336px;
+$panorama-default-total-height: 336px;
+$panorama-default-image: 'bank-sprite.png';
+$panorama-default: (224px, 112px, -224px, -112px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'panorama-default', );
+$photo-active-name: 'photo-active';
+$photo-active-x: 0px;
+$photo-active-y: 0px;
+$photo-active-offset-x: 0px;
+$photo-active-offset-y: 0px;
+$photo-active-width: 112px;
+$photo-active-height: 112px;
+$photo-active-total-width: 336px;
+$photo-active-total-height: 336px;
+$photo-active-image: 'bank-sprite.png';
+$photo-active: (0px, 0px, 0px, 0px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'photo-active', );
+$photo-default-name: 'photo-default';
+$photo-default-x: 112px;
+$photo-default-y: 112px;
+$photo-default-offset-x: -112px;
+$photo-default-offset-y: -112px;
+$photo-default-width: 112px;
+$photo-default-height: 112px;
+$photo-default-total-width: 336px;
+$photo-default-total-height: 336px;
+$photo-default-image: 'bank-sprite.png';
+$photo-default: (112px, 112px, -112px, -112px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'photo-default', );
+$sort-default-name: 'sort-default';
+$sort-default-x: 300px;
+$sort-default-y: 224px;
+$sort-default-offset-x: -300px;
+$sort-default-offset-y: -224px;
+$sort-default-width: 7px;
+$sort-default-height: 10px;
+$sort-default-total-width: 336px;
+$sort-default-total-height: 336px;
+$sort-default-image: 'bank-sprite.png';
+$sort-default: (300px, 224px, -300px, -224px, 7px, 10px, 336px, 336px, 'bank-sprite.png', 'sort-default', );
+$sort-down-name: 'sort-down';
+$sort-down-x: 307px;
+$sort-down-y: 224px;
+$sort-down-offset-x: -307px;
+$sort-down-offset-y: -224px;
+$sort-down-width: 7px;
+$sort-down-height: 10px;
+$sort-down-total-width: 336px;
+$sort-down-total-height: 336px;
+$sort-down-image: 'bank-sprite.png';
+$sort-down: (307px, 224px, -307px, -224px, 7px, 10px, 336px, 336px, 'bank-sprite.png', 'sort-down', );
+$sort-up-name: 'sort-up';
+$sort-up-x: 314px;
+$sort-up-y: 224px;
+$sort-up-offset-x: -314px;
+$sort-up-offset-y: -224px;
+$sort-up-width: 7px;
+$sort-up-height: 10px;
+$sort-up-total-width: 336px;
+$sort-up-total-height: 336px;
+$sort-up-image: 'bank-sprite.png';
+$sort-up: (314px, 224px, -314px, -224px, 7px, 10px, 336px, 336px, 'bank-sprite.png', 'sort-up', );
+$video-active-name: 'video-active';
+$video-active-x: 0px;
+$video-active-y: 112px;
+$video-active-offset-x: 0px;
+$video-active-offset-y: -112px;
+$video-active-width: 112px;
+$video-active-height: 112px;
+$video-active-total-width: 336px;
+$video-active-total-height: 336px;
+$video-active-image: 'bank-sprite.png';
+$video-active: (0px, 112px, 0px, -112px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'video-active', );
+$video-default-name: 'video-default';
+$video-default-x: 112px;
+$video-default-y: 224px;
+$video-default-offset-x: -112px;
+$video-default-offset-y: -224px;
+$video-default-width: 112px;
+$video-default-height: 112px;
+$video-default-total-width: 336px;
+$video-default-total-height: 336px;
+$video-default-image: 'bank-sprite.png';
+$video-default: (112px, 224px, -112px, -224px, 112px, 112px, 336px, 336px, 'bank-sprite.png', 'video-default', );
+$spritesheet-width: 336px;
+$spritesheet-height: 336px;
+$spritesheet-image: 'bank-sprite.png';
+$spritesheet-sprites: ($flash-active, $flash-default, $folder-small, $folder, $panorama-active, $panorama-default, $photo-active, $photo-default, $sort-default, $sort-down, $sort-up, $video-active, $video-default, );
+$spritesheet: (336px, 336px, 'bank-sprite.png', $spritesheet-sprites, );
+
+// The provided mixins are intended to be used with the array-like variables
+//
+// .icon-home {
+//   @include sprite-width($icon-home);
+// }
+//
+// .icon-email {
+//   @include sprite($icon-email);
+// }
+//
+// Example usage in HTML:
+//
+// `display: block` sprite:
+// <div class="icon-home"></div>
+//
+// To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+//
+// // CSS
+// .icon {
+//   display: inline-block;
+// }
+//
+// // HTML
+// <i class="icon icon-home"></i>
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+// The `sprites` mixin generates identical output to the CSS template
+//   but can be overridden inside of SCSS
+//
+// @include sprites($spritesheet-sprites);
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}

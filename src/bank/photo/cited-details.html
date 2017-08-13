@@ -1,0 +1,20 @@
+<div class="cited-details">
+    <table>
+        <thead>
+        <tr>
+            <td>引用类型</td>
+            <td>引用对象</td>
+            <td>引用时间</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(citedDetails, function(detail) { %>
+        <tr>
+            <td><%- detail.citedType %></td>
+            <td><a href="<%- detail.citedLink %>" target="_blank"><%- detail.citedText %></a></td>
+            <td><%- detail.citedTime %></td>
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+</div>

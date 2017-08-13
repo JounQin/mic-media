@@ -1,0 +1,55 @@
+.photo-container {
+  border: 1px solid;
+  .search-region {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  .tabs-region {
+    position: absolute;
+    top: 65px;
+    right: 20px;
+    float: right;
+    .list-type {
+      background-color: #f5f7fa;
+      border: 1px solid #ced3d9;
+      border-radius: 3px;
+      font-size: 0;
+
+      .ob-icon {
+        @include inline-block;
+        cursor: pointer;
+        line-height: 28px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        + .ob-icon {
+          border-left: 1px solid #ced3d9;
+        }
+
+        &.active {
+          color: #e64545;
+        }
+      }
+    }
+  }
+  .pager-region .pager {
+    padding: 10px 0;
+    left: 20px;
+  }
+  .link-text {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    font-size: 12px;
+  }
+  .photo-wrap {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    left: 10px;
+    bottom: 50px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}

@@ -1,0 +1,38 @@
+.flash-dialog {
+  width: 450px;
+  height: 450px;
+  text-align: center;
+  line-height: 620px;
+  .icon-tool .ob-icon{
+    font-size: 52px;
+    color: #fff;
+    background: rgba(0,0,0,0.3) center center no-repeat;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: none;
+  }
+}
+
+.flash-dialog:hover {
+  .icon-play {
+    display: none;
+  }
+  .icon-pause {
+    display: inline;
+  }
+  .icon-tool.stop {
+    .icon-play {
+      display: inline;
+    }
+    .icon-pause {
+      display: none;
+    }
+  }
+}
+
+.dlg-title {
+  background-color: #fff;
+  border-bottom: 1px solid #e6ecf2;
+}

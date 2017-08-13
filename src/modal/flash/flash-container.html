@@ -1,0 +1,31 @@
+<div class="tabs-region">
+    <div class="fr list-type J-toggle-list-type">
+        <i class="ob-icon icon-gallery <%- viewType === 'thumbnail' ? 'active' : '' %>"></i>
+        <i class="ob-icon icon-list <%- viewType === 'list' ? 'active' : '' %>"></i>
+    </div>
+</div>
+<div class="flash-wrap obelisk-form">
+    <% if(viewType==='thumbnail') {%>
+        <div class="flash-region"></div>
+    <% } else { %>
+    <div class="flash-region">
+        <table class="flash-table">
+            <thead>
+            <tr>
+                <td class="flash-img"><%- I18N.flashes %></td>
+                <td class="flash-size"><%- I18N.size %></td>
+                <td class="flash-duration"><%- I18N.duration %></td>
+                <td class="flash-date"><%- I18N.updatedDate %></td>
+                <td class="flash-linked"><%- I18N.linkedProduct %></td>
+            </tr>
+            </thead>
+            <tbody class="flash-region">
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+</div>
+<div class="pager-region"></div>
+<div class="link-text">
+    <a href="#"><%- I18N.visitFlashBank %> <i class="ob-icon icon-right"></i></a>
+</div>

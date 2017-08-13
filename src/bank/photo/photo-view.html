@@ -1,0 +1,97 @@
+<% if (viewType === 'thumbnail') { %>
+<div class="photo-item <%- checked ? 'checked' : '' %> <%- editing ? 'editing' : '' %>">
+    <div class="img-wrapper">
+        <% if(group) { %>
+        <div class="folder"></div>
+        <% } else { %>
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+        <% } %>
+    </div>
+    <div class="photo-name">
+        <% if(editing) { %>
+        <input class="input-text" value="<%- mediumName %>">
+        <% } else { %>
+        <%- mediumName %>
+        <% } %>
+    </div>
+    <% if(!group) { %>
+    <div class="input-checkbox">
+        <label class="input-wrap">
+            <input type="checkbox" <%- checked ? 'checked' : '' %>>
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+    <% } %>
+    <div class="photo-checked"></div>
+    <div class="photo-hover">
+        <div class="fake-img-wrapper J-click-photo"></div>
+        <div class="fake-photo-name">
+            <%- mediumName %>
+        </div>
+        <ul class="photo-info">
+            <li><%- I18N.size %>: <%- mediumSize %></li>
+            <% if (!group) { %>
+            <li><%- I18N.pixel %>: <%- mediumWidth %>*<%- mediumHeight %></li>
+            <li><%- I18N.poster %>: <%- posterName %></li>
+            <li><%- I18N.reviewStatus %>: <%- I18N.mediumStatuses[mediumStatus] %></li>
+            <% } %>
+            <li><%- I18N.updatedDate %>: <%- updateTime %></li>
+            <% if(!group) { %>
+            <li><%- I18N.citedTimes %>: <%- citedTimes %> <%- I18N.times %></li>
+            <% } %>
+        </ul>
+        <div class="hover-actions cf">
+            <div class="action rename"><%- I18N.rename %></div>
+            <div class="action delete"><%- I18N.del %></div>
+        </div>
+    </div>
+</div>
+<% } else { %>
+<td class="photo-info">
+    <% if(!group) { %>
+    <div class="input-checkbox">
+        <label class="input-wrap">
+            <input type="checkbox" <%- checked ? 'checked' : '' %>>
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+    <% } %>
+    <div class="img-wrapper J-click-photo">
+        <% if(group) { %>
+        <div class="folder-small"></div>
+        <% } else { %>
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+        <% } %>
+    </div>
+    <div class="photo-name">
+        <% if(editing) { %>
+        <input class="input-text" value="<%- mediumName %>">
+        <% } else { %>
+        <%- mediumName %>
+        <% } %>
+    </div>
+</td>
+<td class="photo-size">
+    <%- mediumSize %>
+    <% if(!group) { %>
+    <div class="fake-photo-pixel">
+        <%- mediumWidth + '*' + mediumHeight %>
+    </div>
+    <% } %>
+</td>
+<td class="photo-pixel"><%- group ? '-' : mediumWidth + '*' + mediumHeight %></td>
+<td class="photo-poster"><%- group ? '-' : posterName %></td>
+<td class="photo-status"><%- group ? '-' : I18N.mediumStatuses[mediumStatus] %></td>
+<td class="photo-update-time"><%- updateTime %></td>
+<td class="photo-cited-times">
+    <% if (group) { %>
+    -
+    <% } else { %>
+    <span class="times J-cited-detail"><%- citedTimes + ' ' + I18N.times %></span>
+    <% } %>
+</td>
+<td class="photo-operation">
+    <div class="rename"><%- I18N.rename %></div>
+    <div class="delete"><%- I18N.del %></div>
+</td>
+<% } %>

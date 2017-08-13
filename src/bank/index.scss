@@ -1,0 +1,41 @@
+@import "/common/obelisk/_base";
+@import "/common/obelisk/lib/_button";
+@import "/common/obelisk/lib/_input";
+@import "/common/obelisk/module/_pager";
+@import "/common/obelisk/lib/_select";
+@import "/common/js/assets/artDialog/2.0.0/skins/default";
+@import "/common/obelisk/module/_tag";
+@import "/common/obelisk/biz/_crumb.scss";
+@import "common/common";
+@import "small-x";
+
+@import "sprite";
+@import "dialog";
+
+html {
+  background-color: #f5f7fa;
+}
+
+.alert-new.toast {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 100;
+
+  .alert-con {
+    *display: inline;
+  }
+}
+
+.material-library {
+  @include sprites($spritesheet-sprites);
+
+  .img-wrapper {
+    @include img-wrapper;
+  }
+
+  @import "header";
+  @import "main";
+}

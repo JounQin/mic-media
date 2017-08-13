@@ -1,0 +1,13 @@
+<% if(childGroupId) { %>
+<div class="crumb">
+    <% _.each(childGroups, function(group, index) {
+    var isLast = index === childGroups.length - 1
+    %>
+    <span data-index="<%- index %>" data-group-id="<%- group.groupId %>"
+          class="<%- isLast ? '' : 'parent J-toggle-groupId' %>"><%- group.groupName %></span>
+    <% if(!isLast) { %>
+    <i class="ob-icon icon-right"></i>
+    <% } %>
+    <% }) %>
+</div>
+<% } %>

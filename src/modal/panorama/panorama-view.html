@@ -1,0 +1,32 @@
+<% if (viewType === 'thumbnail') { %>
+<div class="panorama-item J-panorama-item">
+    <div class="input-radio">
+        <label class="input-wrap">
+            <input type="radio" name="image">
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+    <a class="panorama-enlarge" href="<%- mediumSrc %>" target="_blank">
+        <i class="ob-icon icon-enlarge J-enlarge"></i>
+    </a>
+    <div class="img-wrapper J-image-title" data-index="<%- mediumId %>">
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+    </div>
+    <div class="panorama-mane"><%- mediumName %></div>
+</div>
+<% } else { %>
+<td class="panorama-img">
+    <div class="input-radio">
+        <label class="input-wrap">
+            <input type="radio" name="image">
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+    <a class="img-wrapper" href="<%- mediumSrc %>" target="_blank">
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+    </a>
+</td>
+<td class="panorama-name pl-5"><%- mediumName %></td>
+<td class="panorama-size pl-5"><%- mediumSize %></td>
+<td class="panorama-date pl-5"><%- updateTime %></td>
+<% } %>

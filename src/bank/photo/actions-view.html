@@ -1,0 +1,23 @@
+<% if (viewType === 'thumbnail') { %>
+<div class="input-checkbox">
+    <label class="input-wrap">
+        <input type="checkbox" <%- allChecked ? 'checked' : '' %>>
+        <span class="input-ctnr"></span><%- I18N.selectAll %>
+    </label>
+</div>
+<% } %>
+<div class="actions-detail">
+    <span class="checked-num"><%- I18N.selectedPhotosNum(checkedNum) %></span>
+    <% if(sourceType === 'cameraman') { %>
+    <span class="action download J-download-photos">
+        <i class="ob-icon icon-download"></i>
+        <%- I18N.download %>
+    </span>
+    <% } else { %>
+    <span class="action move-to J-move-to"><%- I18N.moveTo %></span>
+    <span class="action delete J-delete-photos">
+        <i class="ob-icon icon-recycle"></i>
+        <%- I18N.del %>
+    </span>
+    <% } %>
+</div>

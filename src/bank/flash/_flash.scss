@@ -1,0 +1,115 @@
+ul.flashes {
+  margin-top: 10px;
+  margin-bottom: 50px;
+  .flash {
+    @include inline-block;
+    @include box-sizing;
+    padding: 5px 10px;
+  }
+  .flash-item {
+    width: 220px;
+    height: 220px;
+    position: relative;
+
+    &:hover {
+      .flash-attrs {
+        display: block;
+      }
+      .img-wrapper{
+        z-index: 2;
+        position: absolute;
+      }
+      .icon-play {
+        background: rgba(34, 34, 34, 0.3);
+      }
+    }
+  }
+  .img-wrapper {
+    @include img-wrapper(220px, 220px);
+    cursor: pointer;
+    .image-outside {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(34, 34, 34, 0.2);
+    }
+    .icon-play {
+      position: absolute;
+      left: 84px;
+      top: 84px;
+      font-size: 52px;
+      color: #fff;
+      background: rgba(34, 34, 34, 0.2);
+      border-radius: 50%;
+    }
+  }
+  .flash-attrs {
+    @include box-sizing;
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: -10px;
+    right: -10px;
+    left: -10px;
+    border: 1px solid #ced3d9;
+    border-radius: 3px;
+    padding-top: 230px;
+    .flash-attr {
+      background-color: #fff;
+      padding-left: 9px;
+      padding-right: 9px;
+      padding-bottom: 10px;
+      color: #888;
+    }
+  }
+}
+
+.flash-table {
+  width: 100%;
+  thead tr td{
+    padding-bottom: 10px;
+  }
+  .flash {
+    border-top: 1px solid #e6ecf2;
+    height: 140px;
+  }
+  .flash-img, .flash-size, .flash-duration {
+    width: 150px;
+    padding-left: 10px;
+  }
+  .flash-date {
+    width: 140px;
+    padding-left: 10px;
+  }
+  .img-wrapper {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    position: relative;
+    .image-outside {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(34, 34, 34, 0.2);
+    }
+    .icon-play {
+      position: absolute;
+      font-size: 32px;
+      color: #fff;
+      top: 34px;
+      left: 34px;
+      background: rgba(34, 34, 34, 0.2);
+      border-radius: 50%;
+    }
+  }
+  .img-wrapper:hover {
+    .icon-play {
+      background: rgba(34, 34, 34, 0.3);
+    }
+  }
+}
+

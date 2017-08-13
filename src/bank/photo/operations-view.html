@@ -1,0 +1,27 @@
+<% if(sourceType === 'custom') { %>
+<button class="btn btn-small fl J-upload-photo">
+    <i class="ob-icon icon-upload"></i>
+    <%- I18N.uploadPhotos %>
+</button>
+<% } %>
+<% if(sourceType === 'cameraman') { %>
+<div class="filter-sort"></div>
+<% } else if(!childGroupId || childGroups.length !== 3) { %>
+<button class="btn btn-small fl J-add-subgroup">
+    <i class="ob-icon icon-add"></i>
+    <%- I18N.addSubGroup %>
+</button>
+<% } %>
+<div class="fr pager-simple">
+    <span class="page-num"><%- currPage %>/<%- totalPage %> <%- I18N.pageSuffix %></span>
+    <div class="pager-box cf">
+        <button class="page J-toggle-page" data-page="<%- currPage - 1%>"
+        <%- currPage === 1 ? 'disabled' : '' %>><i class="ob-icon icon-left"></i></button>
+        <button class="page J-toggle-page" data-page="<%- currPage + 1 %>"
+        <%- currPage === totalPage ? 'disabled' : '' %>><i class="ob-icon icon-right"></i></button>
+    </div>
+</div>
+<div class="fr list-type J-toggle-view-type">
+    <i class="ob-icon icon-gallery <%- viewType === 'thumbnail' ? 'active' : '' %>"></i>
+    <i class="ob-icon icon-list <%- viewType === 'list' ? 'active' : '' %>"></i>
+</div>
