@@ -168,8 +168,6 @@ export default Mn.CollectionView.extend({
   initialize() {
     const {photo} = stores
     this.collection = new Groups(photo.get('groups'))
-    this.listenTo(photo, 'change:groups', (photo, groups) => {
-      this.collection.reset(groups)
-    })
+    this.listenTo(photo, 'change:groups', (photo, groups) => this.collection.reset(groups))
   }
 })

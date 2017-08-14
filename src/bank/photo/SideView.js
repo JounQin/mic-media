@@ -50,6 +50,9 @@ export default Mn.View.extend({
       groups.push(group)
 
       this.getChildView('body').collection.push(group)
+
+      const $sideBody = this.$('.side-body')
+      $sideBody.scrollTop($sideBody[0].scrollHeight)
     }
   },
   initialize() {

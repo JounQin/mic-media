@@ -17,7 +17,7 @@
   "dependencies": {
     "art-dialog": "^7.0.0",
     "backbone": "^1.3.3",
-    "backbone.marionette": "^3.4.1",
+    "backbone.marionette": "3.3.1",
     "jquery": "^1.12.4",
     "underscore": "^1.8.3"
   },
@@ -41,7 +41,7 @@
     "gulp.spritesmith": "^6.5.1",
     "livereload": "^0.6.2",
     "npm-run-all": "^4.0.2",
-    "rollup": "^0.47.2",
+    "rollup": "^0.47.4",
     "rollup-plugin-babel": "^3.0.1",
     "rollup-plugin-insert": "^0.1.0",
     "rollup-plugin-node-resolve": "^3.0.0",

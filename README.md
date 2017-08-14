@@ -1,8 +1,8 @@
-# mic-material
+# mic-media
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/JounQin/mic-media.svg)](https://greenkeeper.io/)
 
-MIC material library demo project.
+MIC media bank demo project.
 
 ``` bash
 # develop with watch and livereload

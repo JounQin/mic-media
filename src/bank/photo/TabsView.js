@@ -23,8 +23,5 @@ export default Mn.View.extend({
   },
   initialize() {
     mapState(this, stores.photo, ['tabs', 'activeTabIndex'])
-    this.listenTo(stores.photo, 'tabs', (photo, tabs) => {
-      console.log(tabs)
-    })
   }
 })

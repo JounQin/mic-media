@@ -157,9 +157,7 @@ const FilterSortView = Mn.View.extend({
   },
   initialize() {
     mapState(this, stores.photo, ['posters', 'posterId', 'mediumStatus', 'cited', 'sourceType'])
-    this.model.set({
-      reviewStatuses: I18N.reviewStatuses
-    })
+    this.model.set({reviewStatuses: I18N.reviewStatuses})
   },
   onRender() {
     setTimeout(() =>
