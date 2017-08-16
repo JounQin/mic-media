@@ -1,4 +1,4 @@
-import {$, Bb, Mn, API, PagerView} from '../common'
+import {$, Bb, Mn, API, I18N, PagerView, showTips} from '../common'
 
 import FlashView from './FlashView'
 import template from './flash-container.html'
@@ -11,7 +11,8 @@ export default Mn.View.extend({
   model: new Bb.Model({
     viewType: 'thumbnail',
     currPage: '1',
-    totalPage: '1'
+    totalPage: '1',
+    length: 0
   }),
   regions: {
     tabs: '.tabs-region',
@@ -33,6 +34,11 @@ export default Mn.View.extend({
       if ($el.prop('disabled')) return
       const nextPage = $el.data('page')
       this.getFlashes(nextPage)
+    },
+    'click .J-confirm'() {
+      if ($('input[type="radio"]:checked').length === 0) {
+        showTips(I18N.flashTips)
+      }
     }
   },
   modelEvents: {
@@ -62,7 +68,8 @@ export default Mn.View.extend({
         currPage: Math.min(currPage, pager.totalPage),
         media,
         ...pager,
-        viewType
+        viewType,
+        length: media.length
       })
     })
   },
@@ -70,13 +77,19 @@ export default Mn.View.extend({
     const container = this.model
     const viewType = container.get('viewType')
     const media = container.get('media')
+    const length = container.get('length')
 
-    this.showChildView(viewType === 'thumbnail' ? 'flash' : 'tbody', new FlashView({flash: media, viewType: viewType}))
-    this.showChildView(
-      'pager',
-      new PagerView({
-        pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
-      })
-    )
+    if (length > 0) {
+      this.showChildView(
+        viewType === 'thumbnail' ? 'flash' : 'tbody',
+        new FlashView({flash: media, viewType: viewType})
+      )
+      this.showChildView(
+        'pager',
+        new PagerView({
+          pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
+        })
+      )
+    }
   }
 })

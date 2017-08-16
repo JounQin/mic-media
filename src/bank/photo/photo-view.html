@@ -40,9 +40,11 @@
             <li><%- I18N.citedTimes %>: <%- citedTimes %> <%- I18N.times %></li>
             <% } %>
         </ul>
-        <div class="hover-actions cf">
+        <div class="hover-actions cf <%- group ? 'group' : '' %>">
             <div class="action rename"><%- I18N.rename %></div>
+            <% if (group) { %>
             <div class="action delete"><%- I18N.del %></div>
+            <% } %>
         </div>
     </div>
 </div>
@@ -92,6 +94,8 @@
 </td>
 <td class="photo-operation">
     <div class="rename"><%- I18N.rename %></div>
+    <% if(group) { %>
     <div class="delete"><%- I18N.del %></div>
+    <% } %>
 </td>
 <% } %>

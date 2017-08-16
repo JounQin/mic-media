@@ -10,15 +10,9 @@ export {API}
 export {I18N}
 export const stores = {}
 
-export const mapAttrs = (container, keys) =>
-  keys.reduce((prev, key) => {
-    prev[key] = container.get(key)
-    return prev
-  }, {})
-
 export const mapState = (view, store, keys) => {
-  view.model = new Bb.Model(mapAttrs(store, keys))
-  view.listenTo(store, keys.map(key => `change:${key}`).join(' '), () => view.model.set(mapAttrs(store, keys)))
+  view.model = new Bb.Model(store.pick(keys))
+  view.listenTo(store, keys.map(key => `change:${key}`).join(' '), () => view.model.set(store.pick(keys)))
 }
 
 export const showTips = (id, text, type = 'warn') => {
@@ -34,5 +28,7 @@ export const showTips = (id, text, type = 'warn') => {
   setTimeout(() => $tip.remove(), 2000)
   return id
 }
+
+export const SPECIAL_CHAR_REG = /[\\/:*?”<>|]/
 
 window.I18N = I18N

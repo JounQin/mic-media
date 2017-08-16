@@ -51,6 +51,10 @@ export default Mn.CollectionView.extend({
     },
     'mouseout .J-image-title'() {
       $('.alert-title').hide()
+    },
+    'click .input-radio input'() {
+      $('.panorama-item').removeClass('checked')
+      $('input[type="radio"]:checked').parents('.panorama-item').addClass('checked')
     }
   },
   initialize({panorama}) {

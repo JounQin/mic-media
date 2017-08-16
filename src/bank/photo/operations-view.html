@@ -1,5 +1,7 @@
 <% if(sourceType === 'custom') { %>
-<button class="btn btn-small fl J-upload-photo">
+<button class="btn btn-small fl J-upload-photo"
+        title="<%- usedStorage === totalStorage ? I18N.storageUsedUp(totalStorage) : '' %>"
+        <%- usedStorage === totalStorage ? 'disabled' : '' %>>
     <i class="ob-icon icon-upload"></i>
     <%- I18N.uploadPhotos %>
 </button>
@@ -7,7 +9,8 @@
 <% if(sourceType === 'cameraman') { %>
 <div class="filter-sort"></div>
 <% } else if(!childGroupId || childGroups.length !== 3) { %>
-<button class="btn btn-small fl J-add-subgroup">
+<% var disabled = groupId === null || groupId === ungroupedId %>
+<button class="btn btn-small fl J-add-subgroup" title="<%- disabled ? I18N.subGroupNotSupported : '' %>" <%- disabled ? 'disabled' : '' %>>
     <i class="ob-icon icon-add"></i>
     <%- I18N.addSubGroup %>
 </button>

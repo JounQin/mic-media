@@ -1,4 +1,4 @@
-import {_, $, Bb, Mn, I18N, API, stores, mapAttrs, mapState, showTips, artDialog} from '../common'
+import {_, $, Mn, I18N, API, stores, mapState, showTips, artDialog} from '../common'
 
 import {generateGroupName} from './utils'
 
@@ -42,6 +42,11 @@ const OperationsView = Mn.View.extend({
       const {photo} = stores
       const media = photo.get('media')
 
+      // 如果已经存在正在编辑的子分组时不再添加
+      if (_.find(media, ({group, editing}) => group && editing)) {
+        return
+      }
+
       const groupNames = media.reduce((prev, medium) => {
         if (medium.group) {
           prev.push(medium.mediumName)
@@ -66,12 +71,30 @@ const OperationsView = Mn.View.extend({
     'click .J-upload-photo'() {
       const uploadPhotoView = new UploadPhotoView()
 
-      artDialog.confirm(
+      const mediumIds = []
+
+      uploadPhotoView.on('uploaded', ({mediumId}) => mediumIds.push(mediumId))
+
+      const dialog = artDialog.confirm(
         uploadPhotoView.render().el,
         I18N.uploadPhotos,
         {
           fn: () => {
-            uploadPhotoView.destroy()
+            if (!mediumIds.length) {
+              return false
+            }
+
+            const {photo} = stores
+
+            API.uploadPhoto({
+              mediumIds,
+              groupId: photo.get('childGroupId') || photo.get('groupId')
+            }).done(() => {
+              uploadPhotoView.destroy()
+              dialog.close()
+            })
+
+            return false
           },
           text: I18N.upload
         },
@@ -85,7 +108,18 @@ const OperationsView = Mn.View.extend({
     }
   },
   initialize() {
-    mapState(this, stores.photo, ['currPage', 'totalPage', 'viewType', 'sourceType', 'childGroupId', 'childGroups'])
+    mapState(this, stores.photo, [
+      'usedStorage',
+      'totalStorage',
+      'currPage',
+      'totalPage',
+      'viewType',
+      'sourceType',
+      'groupId',
+      'childGroupId',
+      'childGroups',
+      'ungroupedId'
+    ])
   },
   onRender() {
     this.model.get('sourceType') === 'cameraman' && this.showChildView('filterSort', new FilterSortView())
@@ -127,14 +161,8 @@ const SortTypesView = Mn.View.extend({
     }
   },
   initialize() {
-    this.model = new Bb.Model({
-      sortTypes: I18N.sortTypes,
-      ...this.getAttrs()
-    })
-    this.listenTo(stores.photo, 'change:sortType change:reverse', () => this.model.set(this.getAttrs()))
-  },
-  getAttrs() {
-    return mapAttrs(stores.photo, ['sortType', 'reverse'])
+    mapState(this, stores.photo, ['sortType', 'reverse'])
+    this.model.set({sortTypes: I18N.sortTypes})
   }
 })
 
@@ -218,7 +246,21 @@ const ActionsView = Mn.View.extend({
             API.movePhoto({
               groupId,
               mediumIds
-            }).done(() => {
+            }).done(({code}) => {
+              let tipsText, tipsType
+              switch (code) {
+                case 0:
+                  tipsText = I18N.operatedSuccessfully
+                  tipsType = 'succ'
+                  break
+                case 10003: // 分组已删除
+                  tipsText = I18N.groupDeleted
+                  break
+                case 10004: // 图片已删除
+                  tipsText = I18N.photoDeleted
+                  break
+              }
+              showTips(null, tipsText, tipsType)
               stores.photo.trigger('fetchPhotos')
               moveToGroupView.destroy()
             })
@@ -319,10 +361,23 @@ const ChildGroupsView = Mn.View.extend({
   }
 })
 
+const EmptyView = Mn.View.extend({
+  className: 'empty',
+  template: `<div class="camera"></div>
+<div class="empty-tips"><%- hasPhotographyService ? I18N.noCameramanTips : I18N.noCameramanServiceTips %></div>`,
+  initialize() {
+    mapState(this, stores.photo, ['hasPhotographyService'])
+  }
+})
+
 export default Mn.View.extend({
   className: 'body',
   template,
   regions: {
+    empty: {
+      el: '.empty-region',
+      replaceElement: true
+    },
     childGroups: {
       el: '.child-groups',
       replaceElement: true
@@ -353,16 +408,30 @@ export default Mn.View.extend({
     const {photo} = stores
     this.listenTo(photo, 'change:currPage', this.getPhotos)
     this.listenTo(photo, 'change:sourceType', this.render)
+    this.listenTo(photo, 'change:empty', (photo, empty) => {
+      if (empty && photo.get('sourceType') === 'cameraman') {
+        this.render()
+      }
+    })
   },
   onRender() {
+    const {photo} = stores
+
+    const sourceType = photo.get('sourceType')
+
+    const isCameraman = sourceType === 'cameraman'
+
+    if (isCameraman && photo.get('empty')) {
+      this.showChildView('empty', new EmptyView())
+      return
+    }
+
     this.showChildView('childGroups', new ChildGroupsView())
     this.showChildView('operations', new OperationsView())
 
-    const sourceType = stores.photo.get('sourceType')
-
     this.$el.removeClass('custom system cameraman').addClass(sourceType)
 
-    if (sourceType === 'cameraman') {
+    if (isCameraman) {
       this.$('.filter-sort.region').remove()
     } else {
       this.showChildView('filterSort', new FilterSortView())

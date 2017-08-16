@@ -1,3 +1,4 @@
+<% if(hasPanoramaService === true && length > 0 ) { %>
 <div class="body">
     <div class="tabs-region">
         <div class="fr pager-simple">
@@ -37,3 +38,14 @@
         <% } %>
     </div>
 </div>
+<% } else if (hasPanoramaService === false){ %>
+<div class="no-data">
+    <div class="panorama-pic"></div>
+    <div class="text"><%- I18N.noPanoramaServiceTips %></div>
+</div>
+<% } else { %>
+<div class="no-data">
+    <div class="panorama-pic"></div>
+    <div class="text"><%- I18N.noPanoramaDataTips %></div>
+</div>
+<% } %>

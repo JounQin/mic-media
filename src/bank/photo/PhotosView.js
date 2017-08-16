@@ -1,9 +1,24 @@
-import {_, $, API, Bb, Mn, Pager, PagerView, I18N, artDialog, stores, mapState, showTips} from '../common'
+import {
+  _,
+  $,
+  API,
+  Bb,
+  Mn,
+  Pager,
+  PagerView,
+  I18N,
+  SPECIAL_CHAR_REG,
+  artDialog,
+  stores,
+  mapState,
+  showTips
+} from '../common'
 
 import template from './photo-view.html'
 
 import PhotoPreviewView from './PhotoPreviewView'
 import citedDetailsTemp from './cited-details.html'
+import emptyView from './photo-empty-view.html'
 
 const Photo = Bb.Model.extend({
   idAttribute: 'mediumId',
@@ -12,6 +27,8 @@ const Photo = Bb.Model.extend({
     editing: false
   }
 })
+
+const MAX_INPUT_LENGTH = 50
 
 const PhotoView = Mn.View.extend({
   className: 'photo',
@@ -59,21 +76,40 @@ const PhotoView = Mn.View.extend({
         this.confirmDeletePhoto()
       }
     },
+    'compositionstart .input-text'() {
+      this.composing = true
+    },
+    'compositionend .input-text'(e) {
+      this.composing = false
+      this.inputSearch(e)
+    },
+    'input .input-text, propertychange .input-text': 'inputSearch',
     'blur .input-text'(e) {
       const medium = this.model
       const mediumId = medium.get('mediumId')
       const group = medium.get('group')
       const $input = $(e.currentTarget)
       let mediumName = $.trim($input.val())
+
+      if (SPECIAL_CHAR_REG.test(mediumName)) {
+        showTips(I18N.characterNotSupported)
+        return $input.focus()
+      }
+
       const container = stores.photo
 
-      if (mediumId && !mediumName) {
-        this[group ? 'showGroupTips' : 'showPhotoTips']()
-        return medium.set({editing: false})
+      const originMediumName = medium.get('mediumName')
+
+      if (!mediumName) {
+        if (mediumId) {
+          this[group ? 'showGroupTips' : 'showPhotoTips']()
+          return medium.set({editing: false})
+        } else {
+          return $input.val(originMediumName).select()
+        }
       }
 
       if (group) {
-        const groupName = medium.get('mediumName')
         const currIndex = medium.collection.indexOf(medium)
         const media = stores.photo.get('media')
         const otherGroupNames = media.reduce((prev, medium, index) => {
@@ -83,12 +119,10 @@ const PhotoView = Mn.View.extend({
           return prev
         }, [])
 
-        if (otherGroupNames.indexOf(groupName) !== -1) {
-          this.showGroupTips(groupName)
-          return medium.set({
-            mediumName,
-            editing: false
-          })
+        if (otherGroupNames.indexOf(mediumName) !== -1) {
+          this.showGroupTips(mediumName)
+          medium.set({groupName: originMediumName, editing: !mediumId}, {silent: true})
+          return this.render()
         }
 
         API.updateGroup({
@@ -98,14 +132,14 @@ const PhotoView = Mn.View.extend({
         }).done(({code, data: {groupId, updateTime}}) => {
           if (code) {
             this.showGroupTips(mediumName)
-            mediumName = groupName
+            mediumName = originMediumName
           }
 
           const attrs = {
             mediumName,
             mediumId: groupId,
             updateTime,
-            editing: false
+            editing: !mediumId
           }
 
           medium.set(attrs)
@@ -179,46 +213,13 @@ const PhotoView = Mn.View.extend({
   },
   confirmDeleteGroup() {
     const group = this.model
-    const groupId = group.get('mediumId')
-    const groupName = group.get('mediumName')
-
-    const dialog = artDialog.confirm(
-      `<div class="obelisk-form delete-group">
-    <div class="confirm-message">您确认要删除该子分组及其内容吗？</div>
-    <ul class="input-radio">
-      <li>
-          <label class="input-wrap">
-              <input type="radio" name="deleteType" value="0" checked>
-              <span class="input-ctnr"></span>将${groupName}分组里的所有图片移动到未分组
-          </label>
-      </li>
-      <li>
-          <label class="input-wrap">
-              <input type="radio" name="deleteType" value="0">
-              <span class="input-ctnr"></span>将${groupName}分组里的所有图片移动到上一级分组
-          </label>
-      </li>
-      <li>
-          <label class="input-wrap">
-              <input type="radio" name="deleteType" value="2">
-              <span class="input-ctnr"></span>将${groupName}分组里的所有图片永久删除
-          </label>
-      </li>
-    </ul>
-</div>`,
-      '删除子分组',
+    artDialog.confirm(
+      I18N.confirmDeleteGroup,
       {
         fn: () => {
-          API.deleteGroup({
-            groupId,
-            deleteType: $(dialog.DOM.content[0]).find('[name="deleteType"]:checked').val()
-          }).done(({code}) => {
-            if (code) {
-              showTips('删除失败')
-            }
-
+          API.deleteGroup({groupId: group.get('mediumId'), deleteType: 1}).done(() =>
             stores.photo.trigger('fetchPhotos')
-          })
+          )
         },
         text: I18N.confirm
       },
@@ -228,10 +229,21 @@ const PhotoView = Mn.View.extend({
     )
   },
   showGroupTips(groupName) {
-    showTips(groupName ? '该组名已经存在，请输入不同的名称。' : '请填写组名。')
+    showTips(groupName ? I18N.duplicateGroupName : I18N.emptyName)
   },
   showPhotoTips() {
-    showTips('请填写图片名称')
+    showTips(I18N.emptyName)
+  },
+  inputSearch(e) {
+    if (this.composing) return
+    const $input = $(e.currentTarget)
+    let inputting = $.trim($input.val())
+    if (inputting.length > MAX_INPUT_LENGTH) {
+      $input.val((inputting = inputting.substr(0, MAX_INPUT_LENGTH)))
+    }
+    if (SPECIAL_CHAR_REG.test(inputting)) {
+      showTips(I18N.characterNotSupported)
+    }
   },
   initialize() {
     const container = stores.photo
@@ -253,6 +265,17 @@ const Photos = Bb.Collection.extend({
   model: Photo
 })
 
+const EmptyView = Mn.View.extend({
+  className: 'empty-photos',
+  tagName() {
+    return stores.photo.get('viewType') === 'thumbnail' ? 'div' : 'tr'
+  },
+  template: emptyView,
+  initialize() {
+    mapState(this, stores.photo, ['viewType'])
+  }
+})
+
 const PhotosView = Mn.CollectionView.extend({
   className() {
     return `photos ${stores.photo.get('viewType')}`
@@ -261,6 +284,7 @@ const PhotosView = Mn.CollectionView.extend({
     return stores.photo.get('viewType') === 'thumbnail' ? 'ul' : 'tbody'
   },
   childView: PhotoView,
+  emptyView: EmptyView,
   initialize() {
     const {photo} = stores
     this.collection = new Photos(photo.get('media'))

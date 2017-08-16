@@ -1,6 +1,8 @@
 import {$} from './basic'
 
 import photo from './i18n_photo'
+import flash from './i18n_flash'
+import panorama from './i18n_panorama'
 
 const lang = $('html').attr('lang') === 'en' ? 0 : 1
 
@@ -33,7 +35,10 @@ const I18N = {
   del: ['Delete', '删除'],
   nextPage: ['Next', '下一页'],
   download: ['Download', '下载'],
-  ...photo
+  operatedSuccessfully: ['Operated successfully!', '操作成功！'],
+  ...photo,
+  ...flash,
+  ...panorama
 }
 
 for (const key in I18N) {

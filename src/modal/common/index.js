@@ -10,15 +10,23 @@ export {API}
 export {I18N}
 export const stores = {}
 
-export const mapAttrs = (container, keys) =>
-  keys.reduce((prev, key) => {
-    prev[key] = container.get(key)
-    return prev
-  }, {})
-
 export const mapState = (view, store, keys) => {
-  view.model = new Bb.Model(mapAttrs(store, keys))
-  view.listenTo(store, keys.map(key => `change:${key}`).join(' '), () => view.model.set(mapAttrs(store, keys)))
+  view.model = new Bb.Model(store.pick(keys))
+  view.listenTo(store, keys.map(key => `change:${key}`).join(' '), () => view.model.set(store.pick(keys)))
+}
+
+export const showTips = (id, text, type = 'warn') => {
+  if (!text) {
+    text = id
+    id = null
+  }
+  id = id || Date.now()
+  if ($(`#${id}`).length) return
+  const $tip = $(
+    `<div id="${id}" class="alert-new toast"><div class="alert-con alert-disappear ${type}"><span class="alert-txt">${text}</span></div></div>`
+  ).appendTo('body')
+  setTimeout(() => $tip.remove(), 2000)
+  return id
 }
 
 const alertTitle = $("<div class='alert-title'></div>")

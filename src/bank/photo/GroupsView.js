@@ -1,4 +1,4 @@
-import {$, Bb, Mn, API, I18N, stores, artDialog} from '../common'
+import {$, Bb, Mn, API, I18N, stores, artDialog, showTips} from '../common'
 
 import template from './group-view.html'
 
@@ -62,13 +62,12 @@ const GroupView = Mn.View.extend({
         groupId: group.get('groupId'),
         groupName,
         parentGroupId: null
-      }).done(({code, data: {groupId, groupName: newGroupName}}) => {
+      }).done(({code, data: {groupId}}) => {
         const groupObj = stores.photo.get('groups')[group.collection.indexOf(group)]
         groupObj.groupId = groupId
         if (code) {
           this.showTips(groupName)
-          group.set({groupId, groupName: newGroupName, editing: false})
-          groupObj.groupName = newGroupName
+          group.set({groupId})
         } else {
           group.set({groupId, editing: false})
         }
@@ -76,34 +75,15 @@ const GroupView = Mn.View.extend({
     }
   },
   confirmDelete() {
-    const group = this.model
-    const groupName = group.get('groupName')
-    const dialog = artDialog.confirm(
-      `<div class="obelisk-form">
-    <ul class="input-radio">
-      <li>
-          <label class="input-wrap">
-              <input type="radio" name="deleteType" value="0" checked>
-              <span class="input-ctnr"></span>将${groupName}分组里的所有图片移动到未分组
-          </label>
-      </li>
-      <li>
-          <label class="input-wrap">
-              <input type="radio" name="deleteType" value="2">
-              <span class="input-ctnr"></span>将${groupName}分组里的所有图片永久删除
-          </label>
-      </li>
-    </ul>
-</div>`,
-      '删除分组',
+    artDialog.confirm(
+      I18N.confirmDeleteGroup,
       {
         fn: () => {
-          this.confirmedDelete($(dialog.DOM.content[0]).find('[name="deleteType"]:checked').val())
+          this.confirmedDelete(1)
         },
         text: I18N.confirm
       },
       {
-        fn: null,
         text: I18N.cancel
       },
       {
@@ -134,7 +114,7 @@ const GroupView = Mn.View.extend({
     })
   },
   showTips(groupName) {
-    console.log(groupName ? '该组名已经存在，请输入不同的名称。' : '请填写组名。')
+    showTips(groupName ? '该组名已经存在，请输入不同的名称。' : '请填写组名。')
   },
   initialize() {
     const group = this.model

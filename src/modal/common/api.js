@@ -30,3 +30,5 @@ export const getFlashPlay = data => $.ajax('/motionPhoto/play', {data})
 export const getPanorama = cancelableApi('/panorama/list')
 
 export const switchViewType = viewType => $.ajax('/switch-view-type', {data: {viewType}})
+
+export const getGroups = cancelableApi('/group/list')

@@ -143,13 +143,45 @@
     .upload-btn {
       margin-bottom: 20px;
 
-      .upload-text {
-        @extend .btn;
-        @extend .btn-small;
+      .FOCUS_UPLOAD_wrap {
+        border-color: #ced3d9;
+        background-color: #f5f7fa;
+        width: auto;
+        padding: 0 16px;
       }
 
-      .upload-selector {
-        display: none;
+      .upload-text {
+        color: #222;
+        font-weight: normal;
+      }
+    }
+
+    .alert-new {
+      margin-right: 20px;
+    }
+
+    .errors {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+
+      .view-details {
+        color: #1470cc;
+        cursor: pointer;
+
+        + .details {
+          display: none;
+        }
+
+        .ob-icon {
+          margin-right: 5px;
+        }
+
+        &.active + .details {
+          display: block;
+        }
       }
     }
 
@@ -159,6 +191,7 @@
       height: 5px;
       background-color: #e1e3e6;
       margin-right: 20px;
+      margin-top: 10px;
 
       &.active {
         display: block;

@@ -1,6 +1,6 @@
-import {_} from '../common'
+import {_, I18N} from '../common'
 
-const CUSTOM_GROUP_NAME = '自定义分组'
+const CUSTOM_GROUP_NAME = I18N.customGroupName
 
 const generateGroupNameLevel = (groupNames, level = 0) => {
   if (!_.some(groupNames, groupName => groupName === CUSTOM_GROUP_NAME + (level || ''))) {

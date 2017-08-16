@@ -1,4 +1,4 @@
-import {$, Bb, Mn, API, PagerView} from '../common'
+import {$, Bb, Mn, API, I18N, PagerView, showTips} from '../common'
 
 import PanoramaView from './PanoramaView'
 import template from './panorama-container.html'
@@ -20,7 +20,8 @@ export default Mn.View.extend({
   model: new Bb.Model({
     viewType: 'thumbnail',
     currPage: '1',
-    totalPage: '1'
+    totalPage: '1',
+    length: 0
   }),
   events: {
     'click .J-toggle-list-type .ob-icon'(e) {
@@ -33,6 +34,11 @@ export default Mn.View.extend({
       if ($el.prop('disabled')) return
       const nextPage = $el.data('page')
       this.getFlashes(nextPage)
+    },
+    'click .J-confirm'() {
+      if ($('input[type="radio"]:checked').length === 0) {
+        showTips(I18N.panoramaTips)
+      }
     }
   },
   modelEvents: {
@@ -62,7 +68,8 @@ export default Mn.View.extend({
         currPage: Math.min(currPage, pager.totalPage),
         media,
         ...pager,
-        viewType
+        viewType,
+        length: media.length
       })
     })
   },
@@ -70,15 +77,19 @@ export default Mn.View.extend({
     const container = this.model
     const viewType = container.get('viewType')
     const media = container.get('media')
-    this.showChildView(
-      viewType === 'thumbnail' ? 'panorama' : 'tbody',
-      new PanoramaView({panorama: media, viewType: viewType})
-    )
-    this.showChildView(
-      'pager',
-      new PagerView({
-        pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
-      })
-    )
+    const length = container.get('length')
+
+    if (length > 0) {
+      this.showChildView(
+        viewType === 'thumbnail' ? 'panorama' : 'tbody',
+        new PanoramaView({panorama: media, viewType: viewType})
+      )
+      this.showChildView(
+        'pager',
+        new PagerView({
+          pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
+        })
+      )
+    }
   }
 })

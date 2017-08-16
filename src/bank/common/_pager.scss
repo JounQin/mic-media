@@ -1,38 +1,44 @@
-.pager .page {
-  display: inline-block;
-  height: 28px;
-  line-height: 28px;
-  padding: 0 10px;
-  border: 1px solid #ced3d9;
-  background: #f5f7fa;
-  margin: 0 2px;
-  border-radius: 3px;
-  text-decoration: none;
-  color: #222;
-  vertical-align: top;
-  cursor: pointer;
+.pager {
+  &.hide {
+    display: none;
+  }
 
-  &.page-main {
-    background: #e64545;
-    border: 1px solid #e64545;
-    color: #fff;
+  .page {
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px;
+    border: 1px solid #ced3d9;
+    background: #f5f7fa;
+    margin: 0 2px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #222;
+    vertical-align: top;
+    cursor: pointer;
+
+    &.page-main {
+      background: #e64545;
+      border: 1px solid #e64545;
+      color: #fff;
+
+      &:hover {
+        border-color: #d92121;
+        background: #d92121
+      }
+    }
 
     &:hover {
-      border-color: #d92121;
-      background: #d92121
+      background: #e6ecf2
     }
-  }
 
-  &:hover {
-    background: #e6ecf2
-  }
-
-  &[disabled] {
-    &, &:hover {
-      cursor: not-allowed;
-      background: #edf0f2;
-      border: 1px solid #dae0e6;
-      color: #b2b2b2
+    &[disabled] {
+      &, &:hover {
+        cursor: not-allowed;
+        background: #edf0f2;
+        border: 1px solid #dae0e6;
+        color: #b2b2b2
+      }
     }
   }
 }

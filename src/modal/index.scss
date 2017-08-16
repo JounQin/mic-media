@@ -4,11 +4,29 @@
 @import "/common/obelisk/module/_pager";
 @import "/common/obelisk/lib/_select";
 @import "/common/js/assets/artDialog/2.0.0/skins/default";
+@import "/common/obelisk/module/_tag";
 @import "common/common";
-
 @import "dialog";
+@import "sprite";
+
+body {
+  background: none;
+  overflow: hidden;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  @include opacity(.3)
+}
 
 .material-library {
+  @include sprites($spritesheet-sprites);
+
   .img-wrapper {
     @include img-wrapper;
   }
@@ -17,3 +35,15 @@
   @import "main";
 }
 
+.alert-new.toast {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 100;
+
+  .alert-con {
+    *display: inline;
+  }
+}

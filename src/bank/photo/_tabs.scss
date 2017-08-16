@@ -18,6 +18,10 @@
         margin-left: 40px;
       }
 
+      &.hide {
+        display: none;
+      }
+
       &.active, &:hover {
         border-bottom-color: #e64545;
         color: #e64545;

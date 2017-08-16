@@ -4,8 +4,8 @@ export default Mn.View.extend({
   className: 'tabs',
   template: `<ul class="tab-list">
 <% _.each(tabs, function(tab, index) { %>
-  <li class="J-toggle-tab <%- index === activeTabIndex ? 'active' : '' %> <%- tab.highlight ? 'highlight' : '' %>">
-    <%- tab.text %> <% if(tab.remark) { %> (<%- tab.remark %>) <% } %>
+  <li class="J-toggle-tab <%- index === activeTabIndex ? 'active' : '' %> <%- tab.highlight ? 'highlight' : '' %> <%- keyword && tab.remark === 0 ? 'hide' : '' %>">
+    <%- tab.text %> <% if(keyword && tab.remark) { %> (<%- tab.remark %>) <% } %>
     <div class="highlight-circle"></div>
   </li>
 <% }) %>
@@ -22,6 +22,6 @@ export default Mn.View.extend({
     }
   },
   initialize() {
-    mapState(this, stores.photo, ['tabs', 'activeTabIndex'])
+    mapState(this, stores.photo, ['tabs', 'activeTabIndex', 'keyword'])
   }
 })

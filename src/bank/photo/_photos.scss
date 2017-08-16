@@ -14,6 +14,24 @@
     &.thumbnail .pager {
       margin-left: 10px;
     }
+
+    .empty-photos td {
+      border-bottom: 0;
+    }
+
+    .empty-content {
+      text-align: center;
+      margin-top: 200px;
+
+      .camera {
+        margin: auto;
+      }
+
+      .empty-tips {
+        color: #888;
+        margin-top: 20px;
+      }
+    }
   }
 
   .photos-table {
@@ -129,13 +147,13 @@
       .photo {
         @include inline-block;
         @include box-sizing;
-        width: 20%;
-        padding: 10px 34px 20px 0;
+        width: 190px;
+        padding: 10px 0 20px 0;
       }
 
       .photo-item {
         position: relative;
-        width: 100%;
+        width: 160px;
 
         &:hover {
           .input-checkbox {
@@ -186,7 +204,7 @@
       }
 
       .img-wrapper {
-        @include img-wrapper(100%, 160px);
+        @include img-wrapper(160px);
         position: relative;
         background-color: #f5f7fa;
       }
@@ -259,9 +277,13 @@
       .hover-actions {
         background-color: #f5f7fa;
 
+        &.group .action{
+          width: 50%;
+        }
+
         .action {
           @include box-sizing;
-          width: 50%;
+          width: 100%;
           color: #1470cc;
           float: left;
           padding: 10px;

@@ -1,3 +1,4 @@
+<% if(hasMotionPhotosService === true && length > 0 ) { %>
 <div class="body">
     <div class="tabs-region">
         <div class="fr pager-simple">
@@ -17,8 +18,8 @@
     </div>
     <div class="flash-wrap">
         <% if(viewType==='thumbnail') {%>
-            <div class="flash-region"></div>
-            <div class="pager-region"></div>
+        <div class="flash-region"></div>
+        <div class="pager-region"></div>
         <% } else { %>
         <div class="flash-region">
             <table class="flash-table">
@@ -39,3 +40,14 @@
         <% } %>
     </div>
 </div>
+<% } else if (hasMotionPhotosService === false){ %>
+<div class="no-data">
+    <div class="camera"></div>
+    <div class="text"><%- I18N.noFlashServiceTips %></div>
+</div>
+<% } else { %>
+<div class="no-data">
+    <div class="camera"></div>
+    <div class="text"><%- I18N.noFlashDataTips %></div>
+</div>
+<% } %>

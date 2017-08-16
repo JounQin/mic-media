@@ -1,108 +1,90 @@
-import {$, Bb, Mn, API, I18N, PagerView} from '../common'
+import {$, Bb, Mn, API, I18N, Pager, PagerView, showTips} from '../common'
 
+import FilterView from './FilterView'
 import PhotosView from './PhotosView'
+
 import template from './photo-container.html'
-
-const TABS = [
-  {
-    type: 'custom',
-    text: I18N.customPhotos
-  },
-  {
-    type: 'system',
-    text: I18N.systemPhotos
-  },
-  {
-    type: 'cameraman',
-    text: I18N.cameramanPhotos
-  }
-]
-
-const VIEW_TYPES = ['thumbnail', 'list']
+import SortTypesView from './ActionsView'
 
 export default Mn.View.extend({
   className: 'main photo-container',
   template,
   model: new Bb.Model({
     viewType: 'thumbnail',
-    currPage: '1',
-    totalPage: '1'
+    currPage: 1,
+    totalPage: 1,
+    keyword: null,
+    sortType: null,
+    reverse: false,
+    groupType: '0',
+    groupList: null,
+    posters: null,
+    groupId: null,
+    childGroups: null
   }),
   regions: {
-    search: '.search-region',
-    tabs: '.tabs-region',
-    photo: '.photo-region',
+    filter: '.filter-region',
+    actions: '.actions-region',
+    photos: '.photos-region',
+    tbody: {
+      el: 'tbody',
+      replaceElement: true
+    },
     pager: '.pager-region'
   },
+  modelEvents: {
+    'change:currPage change:keyword change:sortType change:reverse change:groupType'() {
+      this.getFullData()
+    }
+  },
+  childViewEvents: {
+    search(keyword) {
+      this.model.set({keyword})
+    },
+    togglePage(currPage) {
+      this.model.set({currPage})
+    }
+  },
   events: {
-    'click .J-toggle-list-type .ob-icon'(e) {
-      const viewType = VIEW_TYPES[$(e.currentTarget).index()]
-      console.log(viewType)
-
-      // stores.photo.set({viewType})
-      API.switchViewType(viewType)
+    'click .J-confirm'() {
+      if ($('input[type="checkbox"]:checked').length === 0) {
+        showTips(I18N.photoTips)
+      }
     }
   },
   initialize() {
     this.getFullData()
   },
-  getFullData: (function() {
-    let timeout
-
-    return function() {
-      clearTimeout(timeout)
-
-      const container = this.model
-
-      timeout = setTimeout(() =>
-        API.getPhotos({
-          groupId: container.get('childGroupId') || container.get('groupId'),
-          ...container.pick([
-            'sourceType',
-            'keyword',
-            'posterId',
-            'mediumStatus',
-            'cited',
-            'currPage',
-            'sortType',
-            'reverse'
-          ])
-        }).done(({data}) => {
-          console.log(data)
-          const {totalStorage, usedStorage, groups, posters, media, pager, viewType} = data
-          container.set({
-            totalStorage,
-            usedStorage,
-            tabs: TABS.map(tab => {
-              const {type} = tab
-              return {
-                ...tab,
-                remark: data[`${type}PhotosNum`],
-                highlight: type === 'cameraman' && data.cameramanNewPhoto
-              }
-            }).filter(tab => tab.remark !== 0),
-            groups,
-            posters,
-            media,
-            viewType,
-            ...pager,
-            currPage: Math.min(container.get('currPage'), pager.totalPage),
-            allChecked: false,
-            checkedNum: 0
-          })
-        })
-      )
-    }
-  })(),
+  getFullData() {
+    const photo = this.model
+    const currPage = photo.get('currPage')
+    API.getPhotos({
+      currPage,
+      ...photo.pick(['keyword', 'sortType', 'reverse', 'groupType'])
+    }).done(({data}) => {
+      const {media, pager, viewType, posters, childGroups} = data
+      photo.set({
+        currPage: Math.min(currPage, pager.totalPage),
+        media,
+        posters,
+        ...pager,
+        viewType,
+        childGroups
+      })
+      console.log(data)
+    })
+  },
   onRender() {
     const container = this.model
-    window.Select.use(this.$('select'))
-    this.showChildView('photo', new PhotosView())
-    this.showChildView(
-      'pager',
-      new PagerView({
-        pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
-      })
+
+    this.showChildView('filter', new FilterView({container}))
+    this.showChildView('actions', new SortTypesView({container}))
+    this.showChildView('photos', new PhotosView({container}))
+
+    const pager = new Pager(container.pick(['currPage', 'totalPage']))
+    this.showChildView('pager', new PagerView({model: pager}))
+    this.listenTo(container, 'change:currPage change:totalPage', () =>
+      pager.set(container.pick(['currPage', 'totalPage']))
     )
   }
 })

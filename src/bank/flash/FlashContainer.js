@@ -11,10 +11,11 @@ export default Mn.View.extend({
   model: new Bb.Model({
     viewType: 'thumbnail',
     currPage: '1',
-    totalPage: '1'
+    totalPage: '1',
+    length: 0,
+    hasMotionPhotosService: false
   }),
   regions: {
-    tabs: '.tabs-region',
     flash: '.flash-region',
     tbody: {
       el: 'tbody',
@@ -57,12 +58,14 @@ export default Mn.View.extend({
     const container = this.model
     const {currPage} = params
     API.getFlash(params).done(({data}) => {
-      const {media, pager, viewType} = data
+      const {media, pager, viewType, hasMotionPhotosService} = data
       container.set({
         currPage: Math.min(currPage, pager.totalPage),
         media,
         ...pager,
-        viewType
+        viewType,
+        length: media.length,
+        hasMotionPhotosService
       })
     })
   },
@@ -70,13 +73,20 @@ export default Mn.View.extend({
     const container = this.model
     const viewType = container.get('viewType')
     const media = container.get('media')
+    const length = container.get('length')
+    const hasMotionPhotosService = container.get('hasMotionPhotosService')
 
-    this.showChildView(viewType === 'thumbnail' ? 'flash' : 'tbody', new FlashView({flash: media, viewType: viewType}))
-    this.showChildView(
-      'pager',
-      new PagerView({
-        pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
-      })
-    )
+    if (hasMotionPhotosService === true && length > 0) {
+      this.showChildView(
+        viewType === 'thumbnail' ? 'flash' : 'tbody',
+        new FlashView({flash: media, viewType: viewType})
+      )
+      this.showChildView(
+        'pager',
+        new PagerView({
+          pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
+        })
+      )
+    }
   }
 })

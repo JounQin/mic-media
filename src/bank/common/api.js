@@ -67,3 +67,9 @@ export const getGroups = cancelableApi('/group/list')
  * @param data {type, mediumId}
  */
 export const getCitedDetails = data => $.ajax('/get-cited-details', {data})
+
+/**
+ *
+ * @param data {mediumIds, groupId}
+ */
+export const uploadPhoto = data => $.ajax('/photo/upload-link', {data})

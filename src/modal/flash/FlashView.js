@@ -61,6 +61,10 @@ export default Mn.CollectionView.extend({
     },
     'mouseout .J-image-title'() {
       $('.alert-title').hide()
+    },
+    'click .input-radio input'() {
+      $('.flash-item').removeClass('checked')
+      $('input[type="radio"]:checked').parents('.flash-item').addClass('checked')
     }
   },
   initialize({flash}) {

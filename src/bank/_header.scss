@@ -81,6 +81,18 @@
       margin: auto;
     }
 
+    &.error {
+      .text-item .input-text {
+        &, &:hover, &:focus {
+          border-color: #e64545;
+        }
+      }
+
+      .search-error {
+        display: block;
+      }
+    }
+
     &.active {
       height: 60px;
     }
@@ -93,7 +105,7 @@
         border-left: 1px solid #ced3d9;
         border-radius: 3px 0 0 3px;
 
-        &:hover{
+        &:hover {
           border-left-color: #a1aab2;
         }
 
@@ -109,6 +121,13 @@
       color: #fff;
       background-color: #1470cc;
       border: 0;
+    }
+
+    .search-error {
+      display: none;
+      line-height: 30px;
+      margin-left: 20px;
+      color: #e64545;
     }
 
     .close-search {

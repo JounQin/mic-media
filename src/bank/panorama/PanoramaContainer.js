@@ -20,7 +20,9 @@ export default Mn.View.extend({
   model: new Bb.Model({
     viewType: 'thumbnail',
     currPage: '1',
-    totalPage: '1'
+    totalPage: '1',
+    length: 0,
+    hasPanoramaService: false
   }),
   events: {
     'click .J-toggle-list-type .ob-icon'(e) {
@@ -57,12 +59,14 @@ export default Mn.View.extend({
     const container = this.model
     const {currPage} = params
     API.getPanorama(params).done(({data}) => {
-      const {media, pager, viewType} = data
+      const {media, pager, viewType, hasPanoramaService} = data
       container.set({
         currPage: Math.min(currPage, pager.totalPage),
         media,
         ...pager,
-        viewType
+        viewType,
+        length: media.length,
+        hasPanoramaService
       })
     })
   },
@@ -70,15 +74,20 @@ export default Mn.View.extend({
     const container = this.model
     const viewType = container.get('viewType')
     const media = container.get('media')
-    this.showChildView(
-      viewType === 'thumbnail' ? 'panorama' : 'tbody',
-      new PanoramaView({panorama: media, viewType: viewType})
-    )
-    this.showChildView(
-      'pager',
-      new PagerView({
-        pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
-      })
-    )
+    const length = container.get('length')
+    const hasPanoramaService = container.get('hasPanoramaService')
+
+    if (hasPanoramaService === true && length > 0) {
+      this.showChildView(
+        viewType === 'thumbnail' ? 'panorama' : 'tbody',
+        new PanoramaView({panorama: media, viewType: viewType})
+      )
+      this.showChildView(
+        'pager',
+        new PagerView({
+          pager: {currPage: container.get('currPage'), totalPage: container.get('totalPage')}
+        })
+      )
+    }
   }
 })

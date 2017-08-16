@@ -1,6 +1,6 @@
 .panorama-container {
   @import 'panorama';
-  border:1px solid;
+
   .pager-region .pager {
     padding: 10px 0;
   }
@@ -60,5 +60,9 @@
     right: 20px;
     bottom: 15px;
     font-size: 12px;
+  }
+  .no-data {
+    text-align: center;
+    padding-top: 220px;
   }
 }

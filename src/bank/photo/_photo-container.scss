@@ -3,6 +3,32 @@
   @import "side";
   @import "body";
 
+  .search-empty {
+    position: absolute;
+    top: 30px;
+    bottom: 80px;
+    width: 100%;
+    border: 1px solid #e6ecf2;
+    background-color: #fff;
+
+    .empty-content {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      text-align: center;
+      margin-top: -75px;
+    }
+
+    .camera {
+      margin: auto;
+    }
+
+    .empty-tips {
+      color: #555;
+      margin-top: 35px;
+    }
+  }
+
   .content {
     @include box-sizing;
     position: absolute;

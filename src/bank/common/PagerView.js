@@ -46,6 +46,9 @@ export default Mn.View.extend({
     const pager = this.model
     const currPage = pager.get('currPage')
     const totalPage = pager.get('totalPage')
+
+    this.$el[totalPage ? 'removeClass' : 'addClass']('hide')
+
     let pages
     if (totalPage <= 11) {
       pages = generateArr(totalPage)

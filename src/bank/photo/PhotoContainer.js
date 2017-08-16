@@ -1,18 +1,20 @@
-import {Bb, Mn, API, I18N, stores} from '../common'
+import {_, Bb, Mn, API, I18N, stores} from '../common'
 
 import TabsView from './TabsView'
 import SideView from './SideView'
 import BodyView from './BodyView'
+
+import template from './photo-container.html'
 
 const TABS = [
   {
     type: 'custom',
     text: I18N.customPhotos
   },
-  {
-    type: 'system',
-    text: I18N.systemPhotos
-  },
+  // {
+  //   type: 'system',
+  //   text: I18N.systemPhotos
+  // },
   {
     type: 'cameraman',
     text: I18N.cameramanPhotos
@@ -31,7 +33,8 @@ const DEFAULT_ATTRS = {
   currPage: 1,
   totalPage: 1,
   allChecked: false,
-  checkedNum: 0
+  checkedNum: 0,
+  ungroupedId: '-1'
 }
 
 const Container = Bb.Model.extend({
@@ -57,23 +60,28 @@ const Container = Bb.Model.extend({
     ],
     posters: [],
     viewType: 'thumbnail',
+    hasPhotographyService: true,
+    empty: false,
+    searchEmpty: false,
     ...DEFAULT_ATTRS
   }
 })
 
+let storedAttributes
+
 export default Mn.View.extend({
   className: 'main photo-container',
-  template: `<div class="tabs-region"></div>
-<div class="content">
-    <div class="side-region"></div>
-    <div class="body-region"></div>
-</div>`,
+  template,
   regions: {
     tabs: '.tabs-region',
     side: '.side-region',
     body: '.body-region'
   },
   modelEvents: {
+    'change:searchEmpty': 'render',
+    'change:totalPage'(model, totalPage) {
+      model.set({empty: totalPage === 0})
+    },
     'change:activeTabIndex'(model, activeTabIndex) {
       this.model.set({
         groupId: null,
@@ -108,8 +116,19 @@ export default Mn.View.extend({
   },
   searchPhotos(keyword) {
     const container = this.model
-    if (keyword === container.get('keyword')) return
-    container.set({keyword})
+    const lastKeyword = container.get('keyword')
+
+    if (keyword === lastKeyword) return
+
+    if (keyword) {
+      if (!lastKeyword) {
+        storedAttributes = {...container.attributes}
+      }
+      container.set({activeTabIndex: -1, keyword})
+    } else {
+      container.set(storedAttributes)
+    }
+
     this.getFullData()
   },
   getFullData: (function() {
@@ -134,33 +153,58 @@ export default Mn.View.extend({
             'reverse'
           ])
         }).done(({data}) => {
-          const {totalStorage, usedStorage, groups, childGroups, posters, media, pager, viewType} = data
+          const {
+            totalStorage,
+            usedStorage,
+            groups,
+            childGroups,
+            posters,
+            media,
+            pager,
+            viewType,
+            hasPhotographyService
+          } = data
+
+          const tabs = TABS.map(tab => {
+            const {type} = tab
+            return {
+              ...tab,
+              remark: data[`${type}PhotosNum`],
+              highlight: type === 'cameraman' && data.cameramanNewPhoto
+            }
+          })
+
+          if (container.get('activeTabIndex') === -1) {
+            const tabIndex = tabs.findIndex(tab => tab.remark > 0)
+            return container.set({
+              activeTabIndex: tabIndex,
+              searchEmpty: tabIndex === -1
+            })
+          }
+
           container.set({
             totalStorage,
             usedStorage,
-            tabs: TABS.map(tab => {
-              const {type} = tab
-              return {
-                ...tab,
-                remark: data[`${type}PhotosNum`],
-                highlight: type === 'cameraman' && data.cameramanNewPhoto
-              }
-            }),
+            tabs,
             groups,
             childGroups,
             posters,
             media,
             viewType,
+            hasPhotographyService,
             ...pager,
+            ungroupedId: _.find(groups, ({ungrouped}) => ungrouped).groupId,
             currPage: Math.min(container.get('currPage'), pager.totalPage),
             allChecked: false,
-            checkedNum: 0
+            checkedNum: 0,
+            searchEmpty: false
           })
         })
       )
     }
   })(),
   onRender() {
+    if (this.model.get('searchEmpty')) return
     this.showChildView('tabs', new TabsView())
     this.showChildView('side', new SideView())
     this.showChildView('body', new BodyView())

@@ -7,6 +7,22 @@
   bottom: 0;
   left: 20px;
 
+  .empty {
+    position: relative;
+    text-align: center;
+    top: 50%;
+    margin-top: -89px;
+
+    .camera {
+      margin: auto;
+    }
+
+    .empty-tips {
+      margin-top: 20px;
+      color: #555;
+    }
+  }
+
   .child-groups {
     display: none;
     padding-left: 10px;
@@ -165,13 +181,13 @@
       cursor: pointer;
     }
 
-    .move-to {
-      border-right: 1px solid #dae0e6;
-    }
+    .delete {
+      border-left: 1px solid #dae0e6;
 
-    .delete .ob-icon {
-      position: relative;
-      top: -1px;
+      .ob-icon {
+        position: relative;
+        top: -1px;
+      }
     }
   }
 }
