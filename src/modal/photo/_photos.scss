@@ -1,0 +1,120 @@
+.photo-wrap {
+  position: absolute;
+  top: 110px;
+  right: 10px;
+  left: 10px;
+  bottom: 50px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+ul.photos {
+  .photo {
+    @include inline-block;
+    @include box-sizing;
+    padding: 5px 5px 20px;
+    width: 25%;
+  }
+  .photo-item {
+    width: 160px;
+    height: 190px;
+    position: relative;
+    padding: 5px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    .photo-mane {
+      padding-top: 10px;
+    }
+  }
+  .photo-item.checked {
+    border-color: #1470cc;
+  }
+  .img-wrapper {
+    @include img-wrapper(160px, 160px);
+  }
+  .input-checkbox {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    line-height: initial;
+    .input-wrap {
+      margin: 0;
+    }
+  }
+  .photo-enlarge {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #fff;
+    background: #7e8184;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+.photo-table {
+  width: 100%;
+  thead {
+    color: #888;
+
+    tr td {
+      padding-bottom: 10px;
+    }
+
+    .photo-info {
+      padding-left: 106px;
+    }
+  }
+
+  tbody {
+    color: #555;
+  }
+
+  .photo {
+    border-top: 1px solid #e6ecf2;
+    height: 100px;
+
+    &:hover {
+      background: #edf4fa;
+    }
+  }
+
+  .img-wrapper {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: relative;
+    margin-left: 40px;
+    display: block;
+    background-color: #dae0e6;
+  }
+
+  .photo-info {
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    .input-checkbox {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      margin-top: -15px;
+    }
+
+    .img-wrapper, .photo-name {
+      @include inline-block;
+    }
+
+    .photo-name {
+      margin-left: 6px;
+    }
+  }
+
+  .photo-size, .photo-date {
+    width: 140px;
+  }
+}
+
+

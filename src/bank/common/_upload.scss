@@ -1,0 +1,66 @@
+.FOCUS_UPLOAD_wrap {
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  width: 118px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #2040A0;
+  overflow: hidden;
+  background-color: #9CBCE2;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  zoom: 1;
+  border-radius: 4px;
+
+  .FOCUS_UPLOAD_text {
+    font-weight: bold;
+    color: #4079C8;
+    background-color: transparent;
+  }
+}
+
+.FOCUS_UPLOAD_wrap_hover {
+  background-color: #4079C8;
+
+  .FOCUS_UPLOAD_text {
+    color: #9CBCE2;
+  }
+}
+
+.FOCUS_UPLOAD_selector {
+  position: absolute;
+  top: -10px;
+  left: -820px;
+  border: 0 none;
+  display: block;
+  font-size: 200px;
+  left: -20px\9;
+  width: 650px\9;
+  height: 210px\9;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+  *vertical-align: baseline !important;
+}
+
+.FOCUS_UPLOAD_flashWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  background-color: transparent;
+}
+
+/*
+* disabled wrap
+*/
+.FOCUS_UPLOAD_wrap_disabled {
+  background-color: #ccc;
+  cursor: default;
+
+  .FOCUS_UPLOAD_text {
+    color: #999;
+  }
+}

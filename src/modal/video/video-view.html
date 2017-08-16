@@ -1,0 +1,34 @@
+<% if (viewType === 'thumbnail') { %>
+<div class="video-item">
+    <div class="input-radio">
+        <label class="input-wrap">
+            <input type="radio" name="image">
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+    <div class="video-play">
+        <i class="ob-icon icon-play J-image" data-index="<%- mediumId %>"></i>
+    </div>
+    <div class="img-wrapper J-image-title" data-index="<%- mediumId %>">
+        <img src="<%- mediumSrc[0] %>" alt="<%- mediumName %>">
+    </div>
+
+</div>
+<% } else { %>
+<td class="video-img">
+    <div class="input-radio">
+        <label class="input-wrap">
+            <input type="radio" name="image">
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+    <div class="img-wrapper J-image" data-index="<%- mediumId %>">
+        <img src="<%- mediumSrc[0] %>" alt="<%- mediumName %>">
+        <div class="image-outside"><i class="ob-icon icon-play"></i></div>
+    </div>
+</td>
+<td class="video-size"><%- mediumSize %></td>
+<td class="video-duration"><%- mediumDuration %></td>
+<td class="video-date"><%- updateTime %></td>
+<td class="video-linked"><a href="#"><%- relatedProductName %></a></td>
+<% } %>

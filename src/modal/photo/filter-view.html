@@ -1,0 +1,76 @@
+<form class="obelisk-form cf" action="javascript:;">
+    <div class="text-item fl">
+        <button class="btn btn-small search-btn fr J-search-photo">
+            <i class="ob-icon icon-search"></i>
+        </button>
+        <label class="input-wrap">
+            <div class="input-cnt">
+                <input class="input-text J-search-input" placeholder="<%- I18N.searchPhotos %>">
+            </div>
+        </label>
+    </div>
+    <select name="groupType" class="J-select-groupType">
+        <option value="0" <%- groupType === '0' ? 'selected' : '' %> ><%- I18N.allType %></option>
+        <option value="1" <%- groupType === '1' ? 'selected' : '' %> ><%- I18N.fromComputer %></option>
+        <option value="2" <%- groupType === '2' ? 'selected' : '' %> ><%- I18N.fromSystem %></option>
+        <option value="3" <%- groupType === '3' ? 'selected' : '' %> ><%- I18N.fromCameraman %></option>
+    </select>
+    <% if(groupType === '1' || groupType === '2') { %>
+        <div class="select J-select-group <%- groupType === '1' ? 'custom' : 'system' %> " name="groupId" >
+            <div class="select-title select-group-title J-select-title">
+                <span class="select-label J-label" style="display:none"></span>
+                <div class="select-selected">
+                    <span class="J-group-text"><%- groupId %></span>
+                </div>
+                <div class="select-arrow J-arrow">
+                    <i class="micon"></i>
+                </div>
+            </div>
+            <div class="select-list select-group-list J-select-list">
+                <ul class="select-list-wrap J-select-tab-cnt" style="display: block;">
+                    <li>
+                        <a href="javascript:void('<%- I18N.allGroup %>')" cz-id="" class="select-opt J-opt"><%- I18N.allGroup %></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void('<%- I18N.ungrouped %>')" cz-id="" class="select-opt J-opt"><%- I18N.ungrouped %></a>
+                    </li>
+                    <% _.each(groupList, function(group) { %>
+                    <li>
+                        <div class="select-opt">
+                            <% if(group.hasChildGroup) { %>
+                                <div class="show-sub-group J-show-group"><i class="ob-icon icon-add"></i></div>
+                            <% } %>
+                            <a href="javascript:void('<%- group.groupName %>')" cz-id="" class="select-text J-opt"><%- group.groupName %></a>
+                        </div>
+                        <% if(group.hasChildGroup) { %>
+                        <ul class="sub-group J-sub-group">
+                            <% _.each(childGroups, function(group) { %>
+                            <li>
+                                <div class="select-opt">
+                                    <% if(group.hasChildGroup) { %>
+                                    <div class="show-sub-group J-show-group"><i class="ob-icon icon-add"></i></div>
+                                    <% } %>
+                                    <a href="javascript:void('<%- group.groupName %>')" cz-id="" class="select-text J-opt"><%- group.groupName %></a>
+                                </div>
+                            </li>
+                            <% }) %>
+                        </ul>
+                        <% } %>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+    <% } %>
+    <% if(groupType === '1') { %>
+    <select name="groupId" class="J-select-group">
+        <option value=""><%- I18N.poster %></option>
+        <% _.each(posters, function(group) { %>
+        <option value="" <%- groupId === group.groupId ? 'selected' : '' %> ><%- group.posterName %></option>
+        <% }) %>
+    </select>
+    <% } %>
+    <% if(groupType !== '0') { %>
+        <span class="clear-select J-clear"><%- I18N.clear %></span>
+    <% } %>
+</form>

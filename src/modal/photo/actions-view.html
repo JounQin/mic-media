@@ -1,0 +1,12 @@
+<ul class="fl sort-types">
+    <% _.each(sortTypes, function(value) { %>
+    <li class="J-toggle-sort-type" data-type="<%- value.type %>">
+        <%- value.text %>
+        <div class="sort-type-icon sort-<%- sortType === value.type ? reverse ? 'up' : 'down' : 'default' %>"></div>
+    </li>
+    <% }) %>
+</ul>
+<div class="fr list-type J-toggle-list-type">
+    <i class="ob-icon icon-gallery <%- viewType === 'thumbnail' ? 'active' : '' %>"></i>
+    <i class="ob-icon icon-list <%- viewType === 'list' ? 'active' : '' %>"></i>
+</div>

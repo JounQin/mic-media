@@ -1,0 +1,34 @@
+<% if (viewType === 'thumbnail') { %>
+<div class="photo-item J-photo-item">
+    <div class="input-checkbox">
+        <label class="input-wrap">
+            <input type="checkbox">
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+    <div class="photo-enlarge">
+        <i class="ob-icon icon-enlarge J-enlarge"></i>
+    </div>
+    <div class="img-wrapper J-image-title" data-index="<%- mediumId %>">
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+    </div>
+    <div class="photo-mane"><%- mediumName %></div>
+</div>
+<% } else { %>
+<td class="photo-info">
+    <div class="input-checkbox">
+        <label class="input-wrap">
+            <input type="checkbox">
+            <span class="input-ctnr"></span>
+        </label>
+    </div>
+
+    <div class="img-wrapper">
+        <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
+    </div>
+
+    <div class="photo-name"><%- mediumName %></div>
+</td>
+<td class="photo-size"><%- mediumSize %></td>
+<td class="photo-date"><%- updateTime %></td>
+<% } %>
