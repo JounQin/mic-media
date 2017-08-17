@@ -54,6 +54,10 @@ const PhotosView = Mn.CollectionView.extend({
     'click .input-checkbox input'() {
       $('.photo-item').removeClass('checked')
       $('input[type="checkbox"]:checked').parents('.photo-item').addClass('checked')
+    },
+    'click .J-enlarge'(e) {
+      const id = $(e.currentTarget).attr('data-index')
+      console.log(id)
     }
   },
   initialize({container}) {
