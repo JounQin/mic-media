@@ -20,7 +20,7 @@
             <div class="select-title select-group-title J-select-title">
                 <span class="select-label J-label" style="display:none"></span>
                 <div class="select-selected">
-                    <span class="J-group-text"><%- groupId %></span>
+                    <span class="J-group-text"><%- groupId === null ? I18N.allGroup : groupName %></span>
                 </div>
                 <div class="select-arrow J-arrow">
                     <i class="micon"></i>
@@ -29,10 +29,10 @@
             <div class="select-list select-group-list J-select-list">
                 <ul class="select-list-wrap J-select-tab-cnt" style="display: block;">
                     <li>
-                        <a href="javascript:void('<%- I18N.allGroup %>')" cz-id="" class="select-opt J-opt"><%- I18N.allGroup %></a>
+                        <a href="javascript:void('<%- I18N.allGroup %>')" cz-id="" class="select-opt J-group-opt"><%- I18N.allGroup %></a>
                     </li>
                     <li>
-                        <a href="javascript:void('<%- I18N.ungrouped %>')" cz-id="" class="select-opt J-opt"><%- I18N.ungrouped %></a>
+                        <a href="javascript:void('<%- I18N.ungrouped %>')" cz-id="-1" class="select-opt J-group-opt"><%- I18N.ungrouped %></a>
                     </li>
                     <% _.each(groupList, function(group) { %>
                     <li>
@@ -40,7 +40,7 @@
                             <% if(group.hasChildGroup) { %>
                                 <div class="show-sub-group J-show-group"><i class="ob-icon icon-add"></i></div>
                             <% } %>
-                            <a href="javascript:void('<%- group.groupName %>')" cz-id="" class="select-text J-opt"><%- group.groupName %></a>
+                            <a href="javascript:void('')" cz-id="<%- group.groupId %>" class="select-text J-group-opt"><%- group.groupName %></a>
                         </div>
                         <% if(group.hasChildGroup) { %>
                         <ul class="sub-group J-sub-group">
@@ -50,8 +50,22 @@
                                     <% if(group.hasChildGroup) { %>
                                     <div class="show-sub-group J-show-group"><i class="ob-icon icon-add"></i></div>
                                     <% } %>
-                                    <a href="javascript:void('<%- group.groupName %>')" cz-id="" class="select-text J-opt"><%- group.groupName %></a>
+                                    <a href="javascript:void('')" cz-id="<%- group.groupId %>" class="select-text J-group-opt"><%- group.groupName %></a>
                                 </div>
+                                <% if(group.hasChildGroup) { %>
+                                <ul class="sub-group J-sub-group">
+                                    <% _.each(childGroups, function(group) { %>
+                                    <li>
+                                        <div class="select-opt">
+                                            <% if(group.hasChildGroup) { %>
+                                            <div class="show-sub-group J-show-group"><i class="ob-icon icon-add"></i></div>
+                                            <% } %>
+                                            <a href="javascript:void('')" cz-id="<%- group.groupId %>" class="select-text J-group-opt"><%- group.groupName %></a>
+                                        </div>
+                                    </li>
+                                    <% }) %>
+                                </ul>
+                                <% } %>
                             </li>
                             <% }) %>
                         </ul>
@@ -63,10 +77,10 @@
         </div>
     <% } %>
     <% if(groupType === '1') { %>
-    <select name="groupId" class="J-select-group">
-        <option value=""><%- I18N.poster %></option>
-        <% _.each(posters, function(group) { %>
-        <option value="" <%- groupId === group.groupId ? 'selected' : '' %> ><%- group.posterName %></option>
+    <select name="posterId" class="J-select-poster">
+        <option value="" <%- posterId === null ? 'selected' : '' %>><%- I18N.poster %></option>
+        <% _.each(posters, function(post) { %>
+        <option value="<%- post.posterId %>" <%- posterId === post.posterId ? 'selected' : '' %> ><%- post.posterName %></option>
         <% }) %>
     </select>
     <% } %>

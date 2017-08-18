@@ -19,7 +19,9 @@ export default Mn.View.extend({
     groupType: '0',
     groupList: null,
     posters: null,
+    posterId: null,
     groupId: null,
+    groupName: null,
     childGroups: null
   }),
   regions: {
@@ -71,7 +73,6 @@ export default Mn.View.extend({
         viewType,
         childGroups
       })
-      console.log(data)
     })
   },
   onRender() {

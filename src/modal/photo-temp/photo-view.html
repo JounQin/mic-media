@@ -6,8 +6,8 @@
             <span class="input-ctnr"></span>
         </label>
     </div>
-    <div class="photo-enlarge">
-        <i class="ob-icon icon-enlarge J-enlarge" data-index="<%- mediumId %>"></i>
+    <div class="photo-enlarge J-show-image" data-index="<%- mediumId %>">
+        <i class="ob-icon icon-enlarge J-enlarge" ></i>
     </div>
     <div class="img-wrapper J-image-title" data-index="<%- mediumId %>">
         <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
@@ -23,12 +23,14 @@
         </label>
     </div>
 
-    <div class="img-wrapper">
+    <div class="img-wrapper J-show-image" data-index="<%- mediumId %>">
         <img src="<%- mediumSrc %>" alt="<%- mediumName %>">
     </div>
 
     <div class="photo-name"><%- mediumName %></div>
 </td>
 <td class="photo-size"><%- mediumSize %></td>
+<td class="photo-size"><%- mediumWidth %> * <%- mediumHeight %></td>
+<td class="photo-size"><%- mediumStatus === 0 ? I18N.new : mediumStatus === 3 ? I18N.approved : I18N.rejected %></td>
 <td class="photo-date"><%- updateTime %></td>
 <% } %>

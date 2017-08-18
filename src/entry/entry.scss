@@ -1,0 +1,90 @@
+@import "/common/obelisk/_base.scss";
+@import "sprite";
+
+body.overflow {
+  overflow: hidden;
+}
+
+.navigator {
+  margin-bottom: 0;
+}
+
+#main {
+  margin: 0;
+  width: 100%;
+  background-color: #f5f7fa;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.main {
+  width: 990px;
+  margin: auto;
+
+  .crumb {
+    margin-bottom: 20px;
+  }
+}
+
+.content {
+  @include sprites($spritesheet-sprites);
+
+  background-color: #fff;
+  padding: 30px 30px 50px;
+
+  .content-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}
+
+.media-list {
+  font-size: 0;
+  margin-bottom: 40px;
+
+  li {
+    @include inline-block;
+    font-size: 12px;
+    margin-right: 80px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .media-name {
+    margin-top: 10px;
+  }
+}
+
+@each $type in ('photo', 'video', 'motion', 'panorama') {
+  .#{$type}-default:hover {
+    @extend .#{$type}-active;
+  }
+}
+
+.panorama-service {
+  position: relative;
+  background-color: #f5f7fa;
+  width: 360px;
+  height: 180px;
+  font-size: 14px;
+
+  .inner {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    margin-top: -19px;
+  }
+}
+
+#media-iframe {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11001;
+}

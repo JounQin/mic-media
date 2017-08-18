@@ -29,12 +29,13 @@ export default Mn.CollectionView.extend({
     'mousemove .J-image-title'(e) {
       const arr = this.options.panorama
       const id = $(e.currentTarget).attr('data-index')
-      let size = ''
-      let date = ''
+      let size = '', date = '', height = '', width=''
       arr.map(el => {
         $.each(el, (key, value) => {
           if (key === 'mediumId' && value === id) {
             size = el.mediumSize
+            height = el.mediumHeight
+            width = el.mediumWidth
             date = el.updateTime
           }
         })
@@ -44,6 +45,7 @@ export default Mn.CollectionView.extend({
         `
        <ul>
            <li>${I18N.size}: ${size}</li>
+           <li>${I18N.pixel}: ${width} * ${height}</li>
            <li>${I18N.updatedDate}: ${date}</li>
        </ul>
       `

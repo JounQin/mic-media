@@ -1,0 +1,167 @@
+// SCSS variables are information about icon's compiled state, stored under its original file name
+//
+// .icon-home {
+//   width: $icon-home-width;
+// }
+//
+// The large array-like variables contain all information about a single icon
+// $icon-home: x y offset_x offset_y width height total_width total_height image_path;
+//
+// At the bottom of this section, we provide information about the spritesheet itself
+// $spritesheet: width height image $spritesheet-sprites;
+$motion-active-name: 'motion-active';
+$motion-active-x: 0px;
+$motion-active-y: 0px;
+$motion-active-offset-x: 0px;
+$motion-active-offset-y: 0px;
+$motion-active-width: 112px;
+$motion-active-height: 112px;
+$motion-active-total-width: 336px;
+$motion-active-total-height: 336px;
+$motion-active-image: 'entry-sprite.png';
+$motion-active: (0px, 0px, 0px, 0px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'motion-active', );
+$motion-default-name: 'motion-default';
+$motion-default-x: 112px;
+$motion-default-y: 0px;
+$motion-default-offset-x: -112px;
+$motion-default-offset-y: 0px;
+$motion-default-width: 112px;
+$motion-default-height: 112px;
+$motion-default-total-width: 336px;
+$motion-default-total-height: 336px;
+$motion-default-image: 'entry-sprite.png';
+$motion-default: (112px, 0px, -112px, 0px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'motion-default', );
+$panorama-active-name: 'panorama-active';
+$panorama-active-x: 0px;
+$panorama-active-y: 112px;
+$panorama-active-offset-x: 0px;
+$panorama-active-offset-y: -112px;
+$panorama-active-width: 112px;
+$panorama-active-height: 112px;
+$panorama-active-total-width: 336px;
+$panorama-active-total-height: 336px;
+$panorama-active-image: 'entry-sprite.png';
+$panorama-active: (0px, 112px, 0px, -112px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'panorama-active', );
+$panorama-default-name: 'panorama-default';
+$panorama-default-x: 112px;
+$panorama-default-y: 112px;
+$panorama-default-offset-x: -112px;
+$panorama-default-offset-y: -112px;
+$panorama-default-width: 112px;
+$panorama-default-height: 112px;
+$panorama-default-total-width: 336px;
+$panorama-default-total-height: 336px;
+$panorama-default-image: 'entry-sprite.png';
+$panorama-default: (112px, 112px, -112px, -112px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'panorama-default', );
+$photo-active-name: 'photo-active';
+$photo-active-x: 224px;
+$photo-active-y: 0px;
+$photo-active-offset-x: -224px;
+$photo-active-offset-y: 0px;
+$photo-active-width: 112px;
+$photo-active-height: 112px;
+$photo-active-total-width: 336px;
+$photo-active-total-height: 336px;
+$photo-active-image: 'entry-sprite.png';
+$photo-active: (224px, 0px, -224px, 0px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'photo-active', );
+$photo-default-name: 'photo-default';
+$photo-default-x: 224px;
+$photo-default-y: 112px;
+$photo-default-offset-x: -224px;
+$photo-default-offset-y: -112px;
+$photo-default-width: 112px;
+$photo-default-height: 112px;
+$photo-default-total-width: 336px;
+$photo-default-total-height: 336px;
+$photo-default-image: 'entry-sprite.png';
+$photo-default: (224px, 112px, -224px, -112px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'photo-default', );
+$video-active-name: 'video-active';
+$video-active-x: 0px;
+$video-active-y: 224px;
+$video-active-offset-x: 0px;
+$video-active-offset-y: -224px;
+$video-active-width: 112px;
+$video-active-height: 112px;
+$video-active-total-width: 336px;
+$video-active-total-height: 336px;
+$video-active-image: 'entry-sprite.png';
+$video-active: (0px, 224px, 0px, -224px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'video-active', );
+$video-default-name: 'video-default';
+$video-default-x: 112px;
+$video-default-y: 224px;
+$video-default-offset-x: -112px;
+$video-default-offset-y: -224px;
+$video-default-width: 112px;
+$video-default-height: 112px;
+$video-default-total-width: 336px;
+$video-default-total-height: 336px;
+$video-default-image: 'entry-sprite.png';
+$video-default: (112px, 224px, -112px, -224px, 112px, 112px, 336px, 336px, 'entry-sprite.png', 'video-default', );
+$spritesheet-width: 336px;
+$spritesheet-height: 336px;
+$spritesheet-image: 'entry-sprite.png';
+$spritesheet-sprites: ($motion-active, $motion-default, $panorama-active, $panorama-default, $photo-active, $photo-default, $video-active, $video-default, );
+$spritesheet: (336px, 336px, 'entry-sprite.png', $spritesheet-sprites, );
+
+// The provided mixins are intended to be used with the array-like variables
+//
+// .icon-home {
+//   @include sprite-width($icon-home);
+// }
+//
+// .icon-email {
+//   @include sprite($icon-email);
+// }
+//
+// Example usage in HTML:
+//
+// `display: block` sprite:
+// <div class="icon-home"></div>
+//
+// To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+//
+// // CSS
+// .icon {
+//   display: inline-block;
+// }
+//
+// // HTML
+// <i class="icon icon-home"></i>
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+// The `sprites` mixin generates identical output to the CSS template
+//   but can be overridden inside of SCSS
+//
+// @include sprites($spritesheet-sprites);
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}

@@ -160,10 +160,13 @@ export default Mn.View.extend({
             childGroups,
             posters,
             media,
-            pager,
             viewType,
             hasPhotographyService
           } = data
+
+          let {pager} = data
+
+          pager = pager || {totalPage: 0}
 
           const tabs = TABS.map(tab => {
             const {type} = tab
@@ -182,6 +185,8 @@ export default Mn.View.extend({
             })
           }
 
+          const ungrouped = _.find(groups, ({ungrouped}) => ungrouped)
+
           container.set({
             totalStorage,
             usedStorage,
@@ -193,7 +198,7 @@ export default Mn.View.extend({
             viewType,
             hasPhotographyService,
             ...pager,
-            ungroupedId: _.find(groups, ({ungrouped}) => ungrouped).groupId,
+            ungroupedId: ungrouped && ungrouped.groupId,
             currPage: Math.min(container.get('currPage'), pager.totalPage),
             allChecked: false,
             checkedNum: 0,

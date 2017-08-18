@@ -5,9 +5,9 @@ $.ajaxSetup({
   cache: false
 })
 
-$.ajaxPrefilter(options => {
-  options.url = '/api/media' + options.url
-})
+// $.ajaxPrefilter(options => {
+//   options.url = '/api/media' + options.url
+// })
 
 const cancelableApi = url =>
   (() => {

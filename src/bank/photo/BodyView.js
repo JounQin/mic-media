@@ -406,7 +406,9 @@ export default Mn.View.extend({
   },
   initialize() {
     const {photo} = stores
-    this.listenTo(photo, 'change:currPage', this.getPhotos)
+    this.listenTo(photo, 'change:currPage', (photo, currPage) => {
+      currPage && this.getPhotos()
+    })
     this.listenTo(photo, 'change:sourceType', this.render)
     this.listenTo(photo, 'change:empty', (photo, empty) => {
       if (empty && photo.get('sourceType') === 'cameraman') {

@@ -1,4 +1,4 @@
-import {Bb, Mn} from '../common'
+import {$, Bb, Mn} from '../common'
 
 import template from './video-view.html'
 
@@ -19,7 +19,15 @@ export default Mn.CollectionView.extend({
     model.set({viewType: this.options.viewType})
   },
   childView: VideoView,
-  events: {},
+  events: {
+    'click .J-play'() {
+      console.log('aaaaa')
+    },
+    'click .input-radio input'() {
+      $('.video-item').removeClass('checked')
+      $('input[type="radio"]:checked').parents('.video-item').addClass('checked')
+    }
+  },
   initialize({video}) {
     this.collection = new Bb.Collection(video)
   }

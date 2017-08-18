@@ -8,7 +8,7 @@ import {generateGroupName} from './utils'
 
 const HeaderView = Mn.View.extend({
   className: 'side-header',
-  template: `<% if (activeTabIndex !== 2) { %>
+  template: `<% if (sourceType !== 'cameraman') { %>
     <div class="storage">
         <div class="storage-main">
             <div class="storage-used" style="width: <%- usedStorage / totalStorage * 100 %>%"></div>
@@ -22,7 +22,7 @@ const HeaderView = Mn.View.extend({
     change: 'render'
   },
   initialize() {
-    mapState(this, stores.photo, ['activeTabIndex', 'totalStorage', 'usedStorage', 'keyword'])
+    mapState(this, stores.photo, ['sourceType', 'totalStorage', 'usedStorage', 'keyword'])
   }
 })
 
@@ -67,6 +67,6 @@ export default Mn.View.extend({
     })
   },
   toggleView() {
-    this.$el.parent()[stores.photo.get('activeTabIndex') === 2 ? 'removeClass' : 'addClass']('active')
+    this.$el.parent()[stores.photo.get('sourceType') === 'cameraman' ? 'removeClass' : 'addClass']('active')
   }
 })

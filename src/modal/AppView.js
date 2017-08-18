@@ -2,7 +2,7 @@ import {Mn} from './common/index'
 
 import FlashContainer from './flash/FlashContainer'
 import PanoramaContainer from './panorama/PanoramaContainer'
-import PhotoContainer from './photo/PhotoContainer'
+import PhotoContainer from './photo-temp/PhotoContainer'
 import VideoContainer from './video/VideoContainer'
 
 const Container = {

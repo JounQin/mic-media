@@ -1,7 +1,9 @@
-import {$, Bb, Mn, I18N, mapState, showTitle} from '../common'
+import {$, Bb, Mn, I18N, mapState, showTitle, artDialog} from '../common'
 
 import photosView from './photos-view.html'
 import template from './photo-view.html'
+
+import PhotoPreviewView from './PhotoPreviewView'
 
 const PanoramaView = Mn.View.extend({
   className: 'photo',
@@ -30,13 +32,21 @@ const PhotosView = Mn.CollectionView.extend({
     'mousemove .J-image-title'(e) {
       const media = this.options.container.get('media')
       const id = $(e.currentTarget).attr('data-index')
-      let size = ''
-      let date = ''
+      let size = '', date = '', height = '', width='', state=''
       media.map(el => {
         $.each(el, (key, value) => {
           if (key === 'mediumId' && value === id) {
             size = el.mediumSize
+            height = el.mediumHeight
+            width = el.mediumWidth
             date = el.updateTime
+            if(el.mediumStatus === 0) {
+              state = I18N.new
+            } else if (el.mediumStatus === 3) {
+              state = I18N.approved
+            } else {
+              state = I18N.rejected
+            }
           }
         })
       })
@@ -44,6 +54,8 @@ const PhotosView = Mn.CollectionView.extend({
         e,
         `<ul>
            <li>${I18N.size}: ${size}</li>
+           <li>${I18N.pixel}: ${width} * ${height}</li>
+           <li>${I18N.state}: ${state}</li>
            <li>${I18N.updatedDate}: ${date}</li>
        </ul>`
       )
@@ -55,9 +67,28 @@ const PhotosView = Mn.CollectionView.extend({
       $('.photo-item').removeClass('checked')
       $('input[type="checkbox"]:checked').parents('.photo-item').addClass('checked')
     },
-    'click .J-enlarge'(e) {
+    'click .J-show-image'(e) {
+      const container = this.options.container
+
       const id = $(e.currentTarget).attr('data-index')
-      console.log(id)
+      const photos = container.get('media')
+      const currIndex = _.findIndex(photos, ({mediumId}) => mediumId === id)
+
+      const previewView = new PhotoPreviewView({
+        photos,
+        currIndex
+      })
+
+      const dialog = artDialog({
+        lock: true,
+        title: false,
+        cancel: false,
+        content: previewView.render().el
+      })
+
+      previewView.on('closeDialog', () => {
+        dialog.close()
+      })
     }
   },
   initialize({container}) {

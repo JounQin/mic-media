@@ -110,7 +110,7 @@ export const style = () =>
 
 export const sprite = () =>
   Promise.all(
-    ENTRIES.map(
+    ENTRIES.concat('entry').map(
       entry =>
         new Promise(resolve =>
           gulp

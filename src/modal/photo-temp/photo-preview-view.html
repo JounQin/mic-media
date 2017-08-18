@@ -1,0 +1,16 @@
+<% if(currIndex) { %>
+<div class="prev-photo" data-index="<%- currIndex - 1 %>">
+    <i class="ob-icon icon-left"></i>
+</div>
+<% } %>
+<div class="img-wrapper">
+    <img src="<%- photos[currIndex].mediumSrc %>" alt="<%- photos[currIndex].mediumName %>">
+</div>
+<% if(currIndex < photos.length - 1) { %>
+<div class="next-photo" data-index="<%- currIndex + 1 %>">
+    <i class="ob-icon icon-right"></i>
+</div>
+<% } %>
+<div class="close-dialog J-close-dialog">
+    <i class="ob-icon icon-delete"></i>
+</div>

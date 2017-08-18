@@ -9,7 +9,9 @@ export default Mn.View.extend({
     groupType: '0',
     groupList: [],
     groupId: null,
+    groupName: null,
     posters: null,
+    posterId: null,
     childGroups: null
   },
   modelEvents: {
@@ -31,11 +33,32 @@ export default Mn.View.extend({
         $('.J-select-group').addClass('open')
       }
     },
-    'click .J-opt'(e) {
-      $('.J-opt').removeClass('selected')
+    'click .J-group-opt'(e) {
+      const container = this.model
+      $('.J-group-opt').removeClass('selected')
       $(e.currentTarget).addClass('selected')
-      $('.J-group-text').text($('.J-opt.selected').text())
-      this.model.set('groupId', $('.J-opt.selected').text())
+
+      const id = $(e.currentTarget).attr('cz-id')
+      const groupList = container.get('groupList')
+      const childGroups = container.get('childGroups')
+
+      container.set('groupId', id)
+      _.each(groupList, function(group) {
+        if(group.groupId === id) {
+          container.set('groupName', group.groupName)
+        }
+      })
+      _.each(childGroups, function(group) {
+        if(group.groupId === id) {
+          container.set('groupName', group.groupName)
+        }
+      })
+      if(id === '-1') {
+        container.set('groupName', I18N.ungrouped)
+      }
+      if(id === '') {
+        container.set('groupName', I18N.allGroup)
+      }
     },
     'click .J-show-group'(e) {
       const target = $(e.currentTarget).parents('li').children('.J-sub-group')
@@ -50,7 +73,7 @@ export default Mn.View.extend({
     }
   },
   initialize({container}) {
-    mapState(this, container, ['groupType', 'groupList', 'groupId', 'posters', 'childGroups'])
+    mapState(this, container, ['groupType', 'groupList', 'groupId', 'groupName', 'posters', 'posterId', 'childGroups'])
   },
   onRender() {
     setTimeout(() =>
@@ -63,8 +86,12 @@ export default Mn.View.extend({
     container.set('groupType', groupType)
 
     let groupId = this.$('[name="groupId"]').val()
-    groupId = groupId === '' ? I18N.allGroup : groupId
+    groupId = groupId === '' ? null : groupId
     container.set('groupId', groupId)
+
+    let posterId = this.$('[name="posterId"]').val()
+    posterId = posterId === '' ? I18N.poster : posterId
+    container.set('posterId', posterId)
 
     API.getGroups().done(({data}) => {
       container.set('groupList', data)

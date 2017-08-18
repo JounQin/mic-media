@@ -1,4 +1,5 @@
 export default {
+  flashes: ['Motion Photos', '动图'],
   flashPreview: ['Preview', '预览动图'],
   visitFlashBank: ['Visit Multimedia Bank', '去素材库中查看动图'],
   selectFlash: ['Select Motion Photos From Multimedia Bank', '选择素材库中的动图'],

@@ -31,20 +31,6 @@
         }
       }
     }
-    .pager-simple {
-      margin-left: 20px;
-
-      .page {
-        &:first-child {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-
-        &[disabled] {
-          background-color: #edf0f2;
-        }
-      }
-    }
   }
   .panorama-wrap {
     position: absolute;
