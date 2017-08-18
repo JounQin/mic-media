@@ -44,19 +44,19 @@ export default Mn.View.extend({
 
       container.set('groupId', id)
       _.each(groupList, function(group) {
-        if(group.groupId === id) {
+        if (group.groupId === id) {
           container.set('groupName', group.groupName)
         }
       })
       _.each(childGroups, function(group) {
-        if(group.groupId === id) {
+        if (group.groupId === id) {
           container.set('groupName', group.groupName)
         }
       })
-      if(id === '-1') {
+      if (id === '-1') {
         container.set('groupName', I18N.ungrouped)
       }
-      if(id === '') {
+      if (id === '') {
         container.set('groupName', I18N.allGroup)
       }
     },

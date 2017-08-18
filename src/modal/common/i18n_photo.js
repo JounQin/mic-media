@@ -1,4 +1,4 @@
-export default ({
+export default {
   visitPhotoBank: ['Visit Multimedia Bank', '去素材库中管理图片'],
   selectPhoto: ['Select Photos From Multimedia Bank', '选择素材库中的图片'],
   photoTips: ['Please select a photo.', '请选图片'],
@@ -42,4 +42,4 @@ export default ({
       }
     ]
   ]
-})
+}

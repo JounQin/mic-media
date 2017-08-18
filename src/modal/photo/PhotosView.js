@@ -1,4 +1,4 @@
-import {$, Bb, Mn, I18N, mapState, showTitle, artDialog} from '../common'
+import {_, $, Bb, Mn, I18N, mapState, showTitle, artDialog} from '../common'
 
 import photosView from './photos-view.html'
 import template from './photo-view.html'
@@ -32,7 +32,11 @@ const PhotosView = Mn.CollectionView.extend({
     'mousemove .J-image-title'(e) {
       const media = this.options.container.get('media')
       const id = $(e.currentTarget).attr('data-index')
-      let size = '', date = '', height = '', width='', state=''
+      let size = ''
+      let date = ''
+      let height = ''
+      let width = ''
+      let state = ''
       media.map(el => {
         $.each(el, (key, value) => {
           if (key === 'mediumId' && value === id) {
@@ -40,7 +44,7 @@ const PhotosView = Mn.CollectionView.extend({
             height = el.mediumHeight
             width = el.mediumWidth
             date = el.updateTime
-            if(el.mediumStatus === 0) {
+            if (el.mediumStatus === 0) {
               state = I18N.new
             } else if (el.mediumStatus === 3) {
               state = I18N.approved

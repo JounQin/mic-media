@@ -153,16 +153,7 @@ export default Mn.View.extend({
             'reverse'
           ])
         }).done(({data}) => {
-          const {
-            totalStorage,
-            usedStorage,
-            groups,
-            childGroups,
-            posters,
-            media,
-            viewType,
-            hasPhotographyService
-          } = data
+          const {totalStorage, usedStorage, groups, childGroups, posters, media, viewType, hasPhotographyService} = data
 
           let {pager} = data
 

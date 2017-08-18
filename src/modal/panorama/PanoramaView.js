@@ -29,7 +29,10 @@ export default Mn.CollectionView.extend({
     'mousemove .J-image-title'(e) {
       const arr = this.options.panorama
       const id = $(e.currentTarget).attr('data-index')
-      let size = '', date = '', height = '', width=''
+      let size = ''
+      let date = ''
+      let height = ''
+      let width = ''
       arr.map(el => {
         $.each(el, (key, value) => {
           if (key === 'mediumId' && value === id) {
