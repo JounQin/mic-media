@@ -765,9 +765,9 @@ bach@^1.0.0:
     async-settle "^1.0.0"
     now-and-later "^1.0.0"
 
-backbone.marionette@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/backbone.marionette/-/backbone.marionette-3.3.1.tgz#e6b44812a513cd35410b37a73d46423f6b8c57c8"
+backbone.marionette@3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/backbone.marionette/-/backbone.marionette-3.4.2.tgz#42b61cd1f760b1148063a0ea6aeb98be5a6252c6"
   dependencies:
     backbone.radio "^2.0.0"
 
